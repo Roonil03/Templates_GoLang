@@ -1,4 +1,4 @@
-package EulerTour
+package eulertour
 
 type EulerTour struct {
 	n         int

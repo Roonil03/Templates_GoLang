@@ -1,4 +1,4 @@
-package Treap
+package treap
 
 import "math/rand"
 

@@ -1,4 +1,4 @@
-package SegmentTree
+package segmenttree
 
 type SegmentTree struct {
 	n    int

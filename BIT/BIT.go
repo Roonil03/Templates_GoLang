@@ -1,4 +1,4 @@
-package BIT
+package bit
 
 type Fenwick struct {
 	n    int

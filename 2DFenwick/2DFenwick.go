@@ -1,4 +1,4 @@
-package Fenwick2D
+package fenwick2d
 
 type Fenwick2D struct {
 	n, m int
