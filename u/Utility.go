@@ -1,4 +1,4 @@
-package main
+package u
 
 func max32(a, b int32) int32 {
 	if a > b {

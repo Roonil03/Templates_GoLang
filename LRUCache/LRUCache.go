@@ -1,4 +1,4 @@
-package main
+package LRUCache
 
 import (
 	"container/list"

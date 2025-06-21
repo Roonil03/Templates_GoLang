@@ -1,4 +1,4 @@
-package main
+package Rope
 
 type Rope struct {
 	weight int

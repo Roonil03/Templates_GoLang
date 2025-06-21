@@ -1,4 +1,4 @@
-package main
+package ds
 
 type DSU struct {
 	parent, rank []int

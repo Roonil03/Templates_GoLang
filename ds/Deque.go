@@ -1,4 +1,4 @@
-package main
+package ds
 
 type Deque struct {
 	data       []int

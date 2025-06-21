@@ -1,4 +1,4 @@
-package main
+package UnionFind
 
 type DSU struct {
 	parent, rank []int
