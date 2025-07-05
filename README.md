@@ -4,13 +4,13 @@ A comprehensive collection of advanced data structures for competitive programmi
 
 ## 📋 Table of Contents
 
-- [Quick Start](#quick-start)
+- [Quick Start](#-quick-start)
 - [Method 1: Direct GitHub Import](#method-1-direct-github-import)
 - [Method 2: Copy-Paste Technique](#method-2-copy-paste-technique)
-- [Available Data Structures](#available-data-structures)
-- [Usage Examples](#usage-examples)
-- [Performance Characteristics](#performance-characteristics)
-- [Best Practices](#best-practices)
+- [Available Data Structures](#-available-data-structures)
+- [Usage Examples](#-usage-examples)
+- [Performance Characteristics](#-performance-characteristics)
+- [Best Practices](#%EF%B8%8F-best-practices)
 
 ## 🚀 Quick Start
 
@@ -143,17 +143,17 @@ func readInt(scanner *bufio.Scanner) int {
 
 ### Step 2: Copy Individual Structures
 The `ds` folder contains the following:
-- [2DFenwick](https://github.com/Roonil03/Templates_GoLang/tree/main/2DFenwick)
-- [BIT](https://github.com/Roonil03/Templates_GoLang/tree/main/BIT)
-- [Deque](https://github.com/Roonil03/Templates_GoLang/tree/main/Deque)
-- [EulerTour](https://github.com/Roonil03/Templates_GoLang/tree/main/EulerTour)
-- [LRUCache](https://github.com/Roonil03/Templates_GoLang/tree/main/LRUCache)
-- [PriorityQueueMax](https://github.com/Roonil03/Templates_GoLang/tree/main/PriorityQueue)
-- [PriorityQueueMin](https://github.com/Roonil03/Templates_GoLang/tree/main/PriorityQueue)
-- [Rope](https://github.com/Roonil03/Templates_GoLang/tree/main/Rope)
-- [SegmentTree](https://github.com/Roonil03/Templates_GoLang/tree/main/SegmentTree)
-- [Treap](https://github.com/Roonil03/Templates_GoLang/tree/main/Treap)
-- [UnionFind](https://github.com/Roonil03/Templates_GoLang/tree/main/UnionFind)
+- [2DFenwick](https://github.com/Roonil03/Templates_GoLang/tree/main/fenwick2D)
+- [BIT](https://github.com/Roonil03/Templates_GoLang/tree/main/bit)
+- [Deque](https://github.com/Roonil03/Templates_GoLang/tree/main/deque)
+- [EulerTour](https://github.com/Roonil03/Templates_GoLang/tree/main/eulertour)
+- [LRUCache](https://github.com/Roonil03/Templates_GoLang/tree/main/lrucache)
+- [PriorityQueueMax](https://github.com/Roonil03/Templates_GoLang/tree/main/priorityqueue)
+- [PriorityQueueMin](https://github.com/Roonil03/Templates_GoLang/tree/main/priorityqueue)
+- [Rope](https://github.com/Roonil03/Templates_GoLang/tree/main/rope)
+- [SegmentTree](https://github.com/Roonil03/Templates_GoLang/tree/main/segmenttree)
+- [Treap](https://github.com/Roonil03/Templates_GoLang/tree/main/treap)
+- [UnionFind](https://github.com/Roonil03/Templates_GoLang/tree/main/unionfind)
 
 *[Utilities](https://github.com/Roonil03/Templates_GoLang/tree/main/u) is also present in this folder, which contains `min`, `max` and `abs` functions*
 ## 📚 Available Data Structures
