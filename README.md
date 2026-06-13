@@ -47,6 +47,16 @@ To navigate or import the specific components of this repository directly, utili
   - [Kadane's Maximum Subarray Sum](./kadane/kadane.go)
   - [Modular Arithmetic & Modular Power](./mod_arithmetic/mod_arith.go)
   - [Mo's Offline Block Decomposition](./mos_algorithm/mos.go)
+- **Geometric Optimizations & Persistent Queries**
+  - [Convex Hull Trick](./convex_hull_trick/cht.go)
+  - [Persistent Segment Tree](./persistent_segment_tree/persistent_st.go)
+  - [Lazy Segment Tree](./lazy_segment_tree/lazy_st.go)
+- **Advanced Algebraic & Matrix Computations**
+  - [Matrix Multiplication (Divide & Conquer)](./matrix_multiply_dc/matrix_dc.go)
+  - [Gaussian Elimination](./gaussian_elimination/gaussian.go)
+- **Advanced Self-Balancing Systems**
+  - [Fibonacci Heap](./fibonacci_heap/fib_heap.go)
+  - [Red-Black Tree](./red_black_tree/rbt.go)
 - **Backward Compatibility**
   - [Legacy Modules (Go <= 1.20)](./legacy/)
 
@@ -97,6 +107,13 @@ A formal, high-performance library of advanced data structures optimized for com
 | **Rabin-Karp Hashing** | $O(n + m)$ average | $O(1)$ |
 | **Suffix Automaton** | $O(n \cdot \Sigma)$ | $O(n \cdot \Sigma)$ |
 | **Mo's Algorithm** | $O((n + q) \sqrt{n})$ | $O(q)$ |
+| **Convex Hull Trick** | $O(\log n)$ query / insert | $O(n)$ |
+| **Persistent Segment Tree** | $O(\log n)$ query / update | $O(n + q \log n)$ |
+| **Lazy Segment Tree** | $O(\log n)$ range query / update | $O(n)$ |
+| **Matrix Multiplication (D&C)** | $O(n^3)$ or $O(n^{\log_2 7})$ block scaling | $O(n^2)$ |
+| **Gaussian Elimination** | $O(n^3)$ | $O(n^2)$ |
+| **Fibonacci Heap** | $O(1)$ insert/decrease-key / $O(\log n)$ delete | $O(n)$ |
+| **Red-Black Tree** | $O(\log n)$ search / insert / delete | $O(n)$ |
 
 ## Competitive Programming Integration
 
