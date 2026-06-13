@@ -1,7 +1,7 @@
 # Go Competitive Programming Templates
 
 <p align="center">
-  <a href="https://pkg.go.dev/github.com/roonil03/templates_golang"><img src="https://pkg.go.dev/badge/github.com/roonil03/templates_golang.svg" alt="Go Reference"></a>
+  <a href="https://pkg.go.dev/github.com/Roonil03/Templates_GoLang"><img src="https://pkg.go.dev/badge/github.com/roonil03/templates_golang.svg" alt="Go Reference"></a>
   <a href="https://goreportcard.com/report/github.com/roonil03/templates_golang"><img src="https://goreportcard.com/badge/github.com/roonil03/templates_golang" alt="Go Report Card"></a>
   <a href="https://github.com/Roonil03/Templates_GoLang/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Roonil03/Templates_GoLang" alt="License"></a>
   <a href="https://github.com/Roonil03/Templates_GoLang/releases"><img src="https://img.shields.io/github/v/release/Roonil03/Templates_GoLang?include_prereleases&style=flat-square" alt="Latest Release"></a>
