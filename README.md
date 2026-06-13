@@ -35,6 +35,18 @@ To navigate or import the specific components of this repository directly, utili
   - [Floyd-Warshall All-Pairs](./floyd_warshall/floyd_warshall.go)
   - [Kruskal's Minimum Spanning Tree](./kruskal/kruskal.go)
   - [Prim's Minimum Spanning Tree](./prim/prim.go)
+- **String Processing & Automata**
+  - [KMP Matcher & Prefix Function](./kmp/kmp.go)
+  - [Rabin-Karp Rolling Hash](./rabin_karp/rabin_karp.go)
+  - [Suffix Automaton](./suffix_automaton/suffix_automaton.go)
+- **Graph Flow & Combinatorial Topology**
+  - [Tarjan's Strongly Connected Components](./tarjan_scc/tarjan.go)
+  - [Dinic's Maxflow Algorithm](./maxflow/maxflow.go)
+  - [Kahn's Topological Sort](./kahn/kahn.go)
+- **Mathematical & Specialized Query Optimizations**
+  - [Kadane's Maximum Subarray Sum](./kadane/kadane.go)
+  - [Modular Arithmetic & Modular Power](./mod_arithmetic/mod_arith.go)
+  - [Mo's Offline Block Decomposition](./mos_algorithm/mos.go)
 - **Backward Compatibility**
   - [Legacy Modules (Go <= 1.20)](./legacy/)
 
@@ -76,6 +88,15 @@ A formal, high-performance library of advanced data structures optimized for com
 | **Floyd-Warshall Algorithm** | $O(V^3)$ | $O(V^2)$ |
 | **Kruskal's MST** | $O(E \log E)$ | $O(V + E)$ |
 | **Prim's MST** | $O(E \log V)$ | $O(V + E)$ |
+| **Tarjan's SCC** | $O(V + E)$ | $O(V)$ |
+| **Dinic's Maxflow** | $O(V^2 E)$ | $O(V + E)$ |
+| **Kahn's Algorithm** | $O(V + E)$ | $O(V + E)$ |
+| **Kadane's Algorithm** | $O(n)$ | $O(1)$ |
+| **KMP Matcher** | $O(n + m)$ | $O(m)$ |
+| **Modular Power** | $O(\log \text{power})$ | $O(1)$ |
+| **Rabin-Karp Hashing** | $O(n + m)$ average | $O(1)$ |
+| **Suffix Automaton** | $O(n \cdot \Sigma)$ | $O(n \cdot \Sigma)$ |
+| **Mo's Algorithm** | $O((n + q) \sqrt{n})$ | $O(q)$ |
 
 ## Competitive Programming Integration
 
