@@ -1,4 +1,4 @@
-# Templates_GoLang
+# Go Competitive Programming Templates
 
 <p align="center">
   <a href="https://pkg.go.dev/github.com/roonil03/templates_golang"><img src="https://pkg.go.dev/badge/github.com/roonil03/templates_golang.svg" alt="Go Reference"></a>
