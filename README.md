@@ -23,6 +23,18 @@ To navigate or import the specific components of this repository directly, utili
   - [Disjoint Set Union (DSU) Implementation](./union_find/union_find.go)
   - [Rope Data Structure](./rope/rope.go)
   - [Euler Tour Implementation](./euler_tour/euler_tour.go)
+- **Advanced Query & Sequence Processing**
+  - [Sparse Table Implementation](./sparse_table/sparse_table.go)
+  - [Trie Implementation](./trie/trie.go)
+  - [Policy-Based Data Structure (PBDS)](./pbds/pbds.go)
+  - [Heavy-Light Decomposition (HLD)](./hld/hld.go)
+  - [Suffix Array & LCP](./suffix_array/suffix_array.go)
+- **Graph & Network Optimization**
+  - [Dijkstra's Shortest Path](./dijkstra/dijkstra.go)
+  - [Bellman-Ford Algorithm](./bellman_ford/bellman_ford.go)
+  - [Floyd-Warshall All-Pairs](./floyd_warshall/floyd_warshall.go)
+  - [Kruskal's Minimum Spanning Tree](./kruskal/kruskal.go)
+  - [Prim's Minimum Spanning Tree](./prim/prim.go)
 - **Backward Compatibility**
   - [Legacy Modules (Go <= 1.20)](./legacy/)
 
@@ -54,6 +66,16 @@ A formal, high-performance library of advanced data structures optimized for com
 | **Euler Tour** | $O(1)$ ancestor check | $O(n)$ |
 | **LRU Cache** | $O(1)$ get/put | $O(\text{capacity})$ |
 | **Priority Queue / Heap** | $O(\log n)$ push/pop | $O(n)$ |
+| **Sparse Table** | $O(n \log n)$ init / $O(1)$ query | $O(n \log n)$ |
+| **Trie** | $O(L)$ insertion / search | $O(L \cdot \Sigma)$ |
+| **PBDS (Order Stats Tree)** | $O(\log n)$ insert / query | $O(n)$ |
+| **Heavy-Light Decomposition** | $O(n)$ build / $O(\log^2 n)$ query | $O(n)$ |
+| **Suffix Array (with LCP)** | $O(n \log n)$ or $O(n \log^2 n)$ build | $O(n)$ |
+| **Dijkstra's Algorithm** | $O((V + E) \log V)$ | $O(V + E)$ |
+| **Bellman-Ford Algorithm** | $O(V \cdot E)$ | $O(V + E)$ |
+| **Floyd-Warshall Algorithm** | $O(V^3)$ | $O(V^2)$ |
+| **Kruskal's MST** | $O(E \log E)$ | $O(V + E)$ |
+| **Prim's MST** | $O(E \log V)$ | $O(V + E)$ |
 
 ## Competitive Programming Integration
 
