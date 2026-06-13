@@ -1,3 +1,3 @@
 module github.com/Roonil03/Templates_GoLang
 
-go 1.23.4
+go 1.23
