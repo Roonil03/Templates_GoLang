@@ -1,21 +1,21 @@
 package rope
 
-type Rope[T any] struct {
+type Rope struct {
 	weight int
-	left   *Rope[T]
-	right  *Rope[T]
-	data   []T
+	left   *Rope
+	right  *Rope
+	data   string
 }
 
-func NewRope[T any](s []T) *Rope[T] {
-	return &Rope[T]{weight: len(s), data: s}
+func NewRope(s string) *Rope {
+	return &Rope{weight: len(s), data: s}
 }
 
-func Concat[T any](a, b *Rope[T]) *Rope[T] {
-	return &Rope[T]{weight: a.Len(), left: a, right: b}
+func Concat(a, b *Rope) *Rope {
+	return &Rope{weight: a.Len(), left: a, right: b}
 }
 
-func (r *Rope[T]) Len() int {
+func (r *Rope) Len() int {
 	if r == nil {
 		return 0
 	}
@@ -25,7 +25,7 @@ func (r *Rope[T]) Len() int {
 	return r.weight + r.right.Len()
 }
 
-func (r *Rope[T]) Index(i int) T {
+func (r *Rope) Index(i int) byte {
 	if r.left == nil && r.right == nil {
 		return r.data[i]
 	}
@@ -35,7 +35,7 @@ func (r *Rope[T]) Index(i int) T {
 	return r.right.Index(i - r.weight)
 }
 
-func (r *Rope[T]) Split(i int) (*Rope[T], *Rope[T]) {
+func (r *Rope) Split(i int) (*Rope, *Rope) {
 	if r.left == nil && r.right == nil {
 		return NewRope(r.data[:i]), NewRope(r.data[i:])
 	}

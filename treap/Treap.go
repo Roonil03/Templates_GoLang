@@ -1,17 +1,21 @@
 package treap
 
-import "math/rand"
+import (
+	"cmp"
+	"math/rand"
+)
 
-type Treap struct {
-	key, pri, sz int
-	left, right  *Treap
+type Treap[K cmp.Ordered] struct {
+	key     K
+	pri, sz int
+	left, right *Treap[K]
 }
 
-func NewTreap(key int) *Treap {
-	return &Treap{key: key, pri: rand.Int(), sz: 1}
+func NewTreap[K cmp.Ordered](key K) *Treap[K] {
+	return &Treap[K]{key: key, pri: rand.Int(), sz: 1}
 }
 
-func (t *Treap) recalc() {
+func (t *Treap[K]) recalc() {
 	t.sz = 1
 	if t.left != nil {
 		t.sz += t.left.sz
@@ -21,23 +25,39 @@ func (t *Treap) recalc() {
 	}
 }
 
-func split(t *Treap, key int) (*Treap, *Treap) {
+func splitStrict[K cmp.Ordered](t *Treap[K], key K) (*Treap[K], *Treap[K]) {
 	if t == nil {
 		return nil, nil
 	}
-	if key < t.key {
-		l, r := split(t.left, key)
+	if t.key < key { 
+		l, r := splitStrict(t.right, key)
+		t.right = l
+		t.recalc()
+		return t, r
+	}
+	l, r := splitStrict(t.left, key)
+	t.left = r
+	t.recalc()
+	return l, t
+}
+
+func splitEq[K cmp.Ordered](t *Treap[K], key K) (*Treap[K], *Treap[K]) {
+	if t == nil {
+		return nil, nil
+	}
+	if key < t.key { 
+		l, r := splitEq(t.left, key)
 		t.left = r
 		t.recalc()
 		return l, t
 	}
-	l, r := split(t.right, key)
+	l, r := splitEq(t.right, key)
 	t.right = l
 	t.recalc()
 	return t, r
 }
 
-func merge(a, b *Treap) *Treap {
+func merge[K cmp.Ordered](a, b *Treap[K]) *Treap[K] {
 	if a == nil {
 		return b
 	}
@@ -54,14 +74,15 @@ func merge(a, b *Treap) *Treap {
 	return b
 }
 
-func (t *Treap) Insert(key int) *Treap {
+func (t *Treap[K]) Insert(key K) *Treap[K] {
 	n := NewTreap(key)
-	a, b := split(t, key)
+	a, b := splitEq(t, key)
 	return merge(merge(a, n), b)
 }
 
-func (t *Treap) Delete(key int) *Treap {
-	a, b := split(t, key-1)
-	b, c := split(b, key)
+func (t *Treap[K]) Delete(key K) *Treap[K] {
+	a, b := splitStrict(t, key)
+	b1, c := splitEq(b, key)
+	_ = b1 
 	return merge(a, c)
 }
