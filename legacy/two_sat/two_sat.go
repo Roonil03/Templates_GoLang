@@ -21,6 +21,10 @@ func (s *TwoSAT) imply(a, b int) {
 // AddClause adds (variable a == aValue) OR (variable b == bValue).
 // Invalid variable IDs panic. Clauses may be added between Solve calls.
 func (s *TwoSAT) AddClause(a int, aValue bool, b int, bValue bool) {
+	n := len(s.graph) / 2
+	if a < 0 || a >= n || b < 0 || b >= n {
+		panic("variable out of range")
+	}
 	u, v := literal(a, aValue), literal(b, bValue)
 	s.imply(u^1, v)
 	s.imply(v^1, u)
