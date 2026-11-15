@@ -95,7 +95,7 @@ This module provides competitive programming templates for Go 1.23 and later. Ea
 | **Euler Tour** | $O(1)$ ancestor check | $O(n)$ |
 | **LRU Cache** | $O(1)$ get/put | $O(\text{capacity})$ |
 | **Sparse Table** | $O(n \log n)$ init / $O(1)$ query | $O(n \log n)$ |
-| **Trie** | $O(L)$ insertion / search | $O(L \cdot \Sigma)$ |
+| **Trie** | $O(L)$ insertion / search | $O(P \cdot \Sigma)$ total node storage |
 | **PBDS (Order Stats Tree)** | $O(\log n)$ expected insert / query | $O(n)$ |
 | **Heavy-Light Decomposition** | $O(n)$ build / $O(\log^2 n)$ query | $O(n)$ |
 | **Suffix Array (with LCP)** | $O(n \log^2 n)$ build | $O(n)$ |
@@ -108,11 +108,11 @@ This module provides competitive programming templates for Go 1.23 and later. Ea
 | **Dinic's Maxflow** | $O(V^2 E)$ | $O(V + E)$ |
 | **Kahn's Algorithm** | $O(V + E)$ | $O(V + E)$ |
 | **Kadane's Algorithm** | $O(n)$ | $O(1)$ |
-| **KMP Matcher** | $O(n + m)$ | $O(m)$ |
+| **KMP Matcher** | $O(n + m)$ | $O(m)$ auxiliary + $O(z)$ returned matches |
 | **Modular Power** | $O(\log \text{power})$ | $O(1)$ |
-| **Rabin-Karp Hashing** | $O(n + m)$ average | $O(1)$ |
+| **Rabin-Karp Hashing** | $O(n + m + Hm)$; $O(nm)$ worst case | $O(1)$ auxiliary + $O(z)$ returned matches |
 | **Suffix Automaton** | $O(n \cdot \Sigma)$ | $O(n \cdot \Sigma)$ |
-| **Mo's Algorithm** | $O((n + q) \sqrt{n})$ | $O(q)$ |
+| **Mo's Algorithm** | $O(q \log q + (qB + n\lceil n/B \rceil)F + qA)$ | $O(q)$ answers, excluding callback state |
 | **Convex Hull Trick** | $O(\log n)$ query, $O(1)$ amortized insert | $O(n)$ |
 | **Persistent Segment Tree** | $O(\log n)$ query / update | $O(n + q \log n)$ |
 | **Lazy Segment Tree** | $O(\log n)$ range query / update | $O(n)$ |
@@ -140,6 +140,10 @@ This module provides competitive programming templates for Go 1.23 and later. Ea
 | **Min heap** | O(log n) push or pop | O(n) |
 
 Here, σ counts distinct values, w is the XOR word width, C counts clauses, and M is the running CRT period. Wavelet ranks and ranges are zero-based.
+
+For the trie, L is one word's length, P counts all allocated nodes (the root plus distinct prefixes across all inserted words), and Σ = 26. For KMP and Rabin–Karp, n and m are the text and pattern lengths, z is the number of returned matches, and H counts Rabin–Karp hash hits that require verification. These bounds assume constant-time element comparisons and value mapping; repetitive inputs can require $O(nm)$ verification even without hash collisions.
+
+For Mo's algorithm, n is the array length, q is the query count, B > 0 is the caller's block size, F bounds the time per add/remove callback, and A bounds the time per answer callback. With B ≈ √n and constant-time callbacks, the total is $O(q \log q + (n + q)\sqrt{n})$, including query sorting. Space assumes fixed-size answers and excludes storage owned by the callbacks.
 
 ## Competitive Programming Integration
 
