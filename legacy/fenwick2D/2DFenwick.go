@@ -14,6 +14,9 @@ func NewFenwick2D(n, m int) *Fenwick2D {
 }
 
 func (f *Fenwick2D) Update(x, y, v int) {
+	if x <= 0 || y <= 0 {
+		panic("Fenwick updates use one-based indices")
+	}
 	for i := x; i <= f.n; i += i & -i {
 		for j := y; j <= f.m; j += j & -j {
 			f.tree[i][j] += v

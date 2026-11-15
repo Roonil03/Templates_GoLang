@@ -1,8 +1,8 @@
 package dijkstra
 
 type Edge struct {
-	to     int
-	weight int
+	To     int
+	Weight int
 }
 
 type Item struct {
@@ -75,8 +75,8 @@ func Dijkstra(n, start int, adj [][]Edge, inf int) []int {
 			continue
 		}
 		for _, edge := range adj[u] {
-			v := edge.to
-			weight := edge.weight
+			v := edge.To
+			weight := edge.Weight
 			if dist[u]+weight < dist[v] {
 				dist[v] = dist[u] + weight
 				pq.Push(Item{v, dist[v]})

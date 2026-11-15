@@ -1,10 +1,10 @@
 package hld
 
 type HLD struct {
-	n                                int
-	adj                              [][]int
-	parent, depth, heavy, head, pos  []int
-	timer                            int
+	n                               int
+	adj                             [][]int
+	parent, depth, heavy, head, pos []int
+	timer                           int
 }
 
 func NewHLD(n int) *HLD {
@@ -59,6 +59,7 @@ func (h *HLD) dfsHLD(v, p, hHead int) {
 
 func (h *HLD) Build(root int) {
 	h.timer = 0
+	h.parent[root], h.depth[root] = -1, 0
 	h.dfsSize(root, -1)
 	h.dfsHLD(root, -1, root)
 }
@@ -76,3 +77,6 @@ func (h *HLD) QueryPath(u, v int, queryFunc func(l, r int)) {
 	}
 	queryFunc(h.pos[u], h.pos[v])
 }
+
+// Position returns the index of v in the sequence used by QueryPath after Build.
+func (h *HLD) Position(v int) int { return h.pos[v] }

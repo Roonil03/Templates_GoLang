@@ -6,8 +6,8 @@ import (
 )
 
 type Treap[K cmp.Ordered] struct {
-	key     K
-	pri, sz int
+	key         K
+	pri, sz     int
 	left, right *Treap[K]
 }
 
@@ -29,7 +29,7 @@ func splitStrict[K cmp.Ordered](t *Treap[K], key K) (*Treap[K], *Treap[K]) {
 	if t == nil {
 		return nil, nil
 	}
-	if t.key < key { 
+	if t.key < key {
 		l, r := splitStrict(t.right, key)
 		t.right = l
 		t.recalc()
@@ -45,7 +45,7 @@ func splitEq[K cmp.Ordered](t *Treap[K], key K) (*Treap[K], *Treap[K]) {
 	if t == nil {
 		return nil, nil
 	}
-	if key < t.key { 
+	if key < t.key {
 		l, r := splitEq(t.left, key)
 		t.left = r
 		t.recalc()
@@ -83,6 +83,21 @@ func (t *Treap[K]) Insert(key K) *Treap[K] {
 func (t *Treap[K]) Delete(key K) *Treap[K] {
 	a, b := splitStrict(t, key)
 	b1, c := splitEq(b, key)
-	_ = b1 
+	_ = b1
 	return merge(a, c)
+}
+
+// Contains reports whether the tree contains key.
+func (t *Treap[K]) Contains(key K) bool {
+	for t != nil {
+		if key == t.key {
+			return true
+		}
+		if key < t.key {
+			t = t.left
+		} else {
+			t = t.right
+		}
+	}
+	return false
 }

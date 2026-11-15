@@ -2,6 +2,7 @@ package gaussian_elimination
 
 import "math"
 
+// GaussianElimination solves a square system in place and returns nil for a zero pivot.
 func GaussianElimination(a [][]float64, b []float64) []float64 {
 	n := len(a)
 	for i := 0; i < n; i++ {
@@ -10,6 +11,9 @@ func GaussianElimination(a [][]float64, b []float64) []float64 {
 			if math.Abs(a[j][i]) > math.Abs(a[pivot][i]) {
 				pivot = j
 			}
+		}
+		if a[pivot][i] == 0 {
+			return nil
 		}
 		a[i], a[pivot] = a[pivot], a[i]
 		b[i], b[pivot] = b[pivot], b[i]

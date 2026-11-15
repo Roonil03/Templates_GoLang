@@ -6,13 +6,13 @@ import (
 )
 
 type Edge[W cmp.Ordered] struct {
-	u, v   int
-	weight W
+	U, V   int
+	Weight W
 }
 
 func Kruskal[W cmp.Ordered](n int, edges []Edge[W]) []Edge[W] {
 	sort.Slice(edges, func(i, j int) bool {
-		return edges[i].weight < edges[j].weight
+		return edges[i].Weight < edges[j].Weight
 	})
 
 	parent := make([]int, n)
@@ -49,7 +49,7 @@ func Kruskal[W cmp.Ordered](n int, edges []Edge[W]) []Edge[W] {
 
 	var mst []Edge[W]
 	for _, edge := range edges {
-		if union(edge.u, edge.v) {
+		if union(edge.U, edge.V) {
 			mst = append(mst, edge)
 		}
 	}

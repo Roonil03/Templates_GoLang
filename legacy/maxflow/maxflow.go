@@ -1,7 +1,7 @@
 package maxflow
 
 type Edge struct {
-	to, rev int
+	to, rev   int
 	cap, flow int64
 }
 
@@ -73,6 +73,12 @@ func (mf *MaxFlow) dfs(v, t int, pushed int64) int64 {
 }
 
 func (mf *MaxFlow) Dinic(s, t int, inf int64) int64 {
+	if s == t {
+		return 0
+	}
+	if inf <= 0 {
+		panic("Dinic requires a positive push limit")
+	}
 	var flow int64 = 0
 	for mf.bfs(s, t) {
 		for i := range mf.ptr {

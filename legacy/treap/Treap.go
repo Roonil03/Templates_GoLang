@@ -21,17 +21,17 @@ func (t *Treap) recalc() {
 	}
 }
 
-func split(t *Treap, key int) (*Treap, *Treap) {
+func split(t *Treap, key int, includeEqual bool) (*Treap, *Treap) {
 	if t == nil {
 		return nil, nil
 	}
-	if key < t.key {
-		l, r := split(t.left, key)
+	if key < t.key || (!includeEqual && key == t.key) {
+		l, r := split(t.left, key, includeEqual)
 		t.left = r
 		t.recalc()
 		return l, t
 	}
-	l, r := split(t.right, key)
+	l, r := split(t.right, key, includeEqual)
 	t.right = l
 	t.recalc()
 	return t, r
@@ -56,12 +56,27 @@ func merge(a, b *Treap) *Treap {
 
 func (t *Treap) Insert(key int) *Treap {
 	n := NewTreap(key)
-	a, b := split(t, key)
+	a, b := split(t, key, true)
 	return merge(merge(a, n), b)
 }
 
 func (t *Treap) Delete(key int) *Treap {
-	a, b := split(t, key-1)
-	b, c := split(b, key)
+	a, b := split(t, key, false)
+	_, c := split(b, key, true)
 	return merge(a, c)
+}
+
+// Contains reports whether the tree contains key.
+func (t *Treap) Contains(key int) bool {
+	for t != nil {
+		if key == t.key {
+			return true
+		}
+		if key < t.key {
+			t = t.left
+		} else {
+			t = t.right
+		}
+	}
+	return false
 }

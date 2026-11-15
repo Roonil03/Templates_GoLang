@@ -5,14 +5,14 @@ type Number interface {
 }
 
 type Edge[W Number] struct {
-	to     int
-	weight W
+	To     int
+	Weight W
 }
 
 func SPFA[W Number](n, start int, adj [][]Edge[W], inf W) ([]W, bool) {
 	dist := make([]W, n)
 	inQueue := make([]bool, n)
-	count := make([]int, n)
+	pathLen := make([]int, n)
 	for i := 0; i < n; i++ {
 		dist[i] = inf
 	}
@@ -26,17 +26,17 @@ func SPFA[W Number](n, start int, adj [][]Edge[W], inf W) ([]W, bool) {
 		inQueue[u] = false
 
 		for _, edge := range adj[u] {
-			v := edge.to
-			weight := edge.weight
+			v := edge.To
+			weight := edge.Weight
 			if dist[u]+weight < dist[v] {
 				dist[v] = dist[u] + weight
+				pathLen[v] = pathLen[u] + 1
+				if pathLen[v] >= n {
+					return nil, true
+				}
 				if !inQueue[v] {
 					q = append(q, v)
 					inQueue[v] = true
-					count[v]++
-					if count[v] >= n {
-						return nil, true 
-					}
 				}
 			}
 		}

@@ -7,7 +7,7 @@ type Number interface {
 }
 
 type Edge[T Number] struct {
-	to, rev int
+	to, rev   int
 	cap, flow T
 }
 
@@ -79,6 +79,12 @@ func (mf *MaxFlow[T]) dfs(v, t int, pushed T) T {
 }
 
 func (mf *MaxFlow[T]) Dinic(s, t int, inf T) T {
+	if s == t {
+		return 0
+	}
+	if inf <= 0 {
+		panic("Dinic requires a positive push limit")
+	}
 	var flow T = 0
 	for mf.bfs(s, t) {
 		for i := range mf.ptr {
