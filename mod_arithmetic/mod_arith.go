@@ -7,7 +7,6 @@ type Integer interface {
 		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64
 }
 
-// residue normalizes x for a positive modulus.
 func residue[T Integer](x, mod T) T {
 	if mod <= 0 {
 		panic("modulus must be positive")

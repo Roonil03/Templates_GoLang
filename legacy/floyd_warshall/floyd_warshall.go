@@ -1,12 +1,9 @@
 package floyd_warshall
 
-// FloydWarshall updates a dense matrix in place. All intermediate sums must fit the weight type.
-// For an integer sentinel indicating missing edges, use FloydWarshallWithInfinity.
 func FloydWarshall(n int, dist [][]int) {
 	floydWarshall(n, dist, nil)
 }
 
-// FloydWarshallWithInfinity skips missing paths marked with inf.
 func FloydWarshallWithInfinity(n int, dist [][]int, inf int) {
 	floydWarshall(n, dist, &inf)
 }

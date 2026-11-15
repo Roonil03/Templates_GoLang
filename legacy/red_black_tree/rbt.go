@@ -111,7 +111,6 @@ func (t *RedBlackTree) balanceInsert(n *Node) {
 	t.root.color = Black
 }
 
-// Contains reports whether key has been inserted.
 func (t *RedBlackTree) Contains(key int64) bool {
 	for n := t.root; n != nil; {
 		if key == n.Key {

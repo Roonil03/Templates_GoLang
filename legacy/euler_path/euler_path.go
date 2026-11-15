@@ -1,11 +1,5 @@
-// Package euler_path checks Euler-trail feasibility and finds its endpoints.
 package euler_path
 
-// Endpoints returns suitable start/end vertices for a trail using every edge
-// once. Directed edges are ordered pairs; undirected loops and parallel edges
-// are allowed. Only vertices incident to edges must be connected (weakly for
-// directed graphs). Empty graphs return (0,0,true), or (-1,-1,true) when n=0.
-// Invalid vertex IDs panic. Time and space are O(V+E).
 func Endpoints(n int, edges [][2]int, directed bool) (start, end int, ok bool) {
 	adj := make([][]int, n)
 	in, out := make([]int, n), make([]int, n)

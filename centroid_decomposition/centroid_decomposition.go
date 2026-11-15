@@ -1,9 +1,5 @@
-// Package centroid_decomposition builds a centroid forest of an undirected forest.
-// Vertices are zero-based; the input must be acyclic.
 package centroid_decomposition
 
-// CentroidDecomposition stores the original adjacency lists, which Build preserves.
-// Build costs O(V log V) time and O(V) auxiliary space, including recursion.
 type CentroidDecomposition struct{ adj [][]int }
 
 func NewCentroidDecomposition(n int) *CentroidDecomposition {
@@ -14,9 +10,6 @@ func (c *CentroidDecomposition) AddEdge(u, v int) {
 	c.adj[v] = append(c.adj[v], u)
 }
 
-// Build returns the centroid-tree parent of every vertex (-1 at each component's
-// root). Each chosen centroid leaves components with at most half as many nodes.
-// It can be called repeatedly, including after adding edges that retain a forest.
 func (c *CentroidDecomposition) Build() []int {
 	n := len(c.adj)
 	parent, size := make([]int, n), make([]int, n)

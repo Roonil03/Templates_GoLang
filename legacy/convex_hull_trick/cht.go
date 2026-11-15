@@ -22,8 +22,6 @@ func NewCHT() *CHT {
 }
 
 func Intersect(l1, l2, l3 Line) bool {
-	// With descending slopes the middle line is redundant if its intersection
-	// with the first is at or beyond its intersection with the third.
 
 	diff := func(a, b int64) *big.Int { return new(big.Int).Sub(big.NewInt(int64(a)), big.NewInt(int64(b))) }
 	left := new(big.Int).Mul(diff(l3.C, l2.C), diff(l1.M, l2.M))
@@ -31,7 +29,6 @@ func Intersect(l1, l2, l3 Line) bool {
 	return left.Cmp(right) <= 0
 }
 
-// Add inserts a line in nonincreasing slope order.
 func (c *CHT) Add(m, cVal int64) {
 	if n := len(c.lines); n > 0 {
 		last := c.lines[n-1]
@@ -52,7 +49,6 @@ func (c *CHT) Add(m, cVal int64) {
 	c.lines = append(c.lines, newLine)
 }
 
-// Query returns the minimum at x. Line evaluations must fit the chosen numeric type.
 func (c *CHT) Query(x int64) int64 {
 	i := sort.Search(len(c.lines)-1, func(i int) bool { return c.lines[i].Eval(x) <= c.lines[i+1].Eval(x) })
 	return c.lines[i].Eval(x)

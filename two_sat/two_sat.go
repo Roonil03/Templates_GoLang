@@ -1,9 +1,5 @@
-// Package two_sat solves Boolean formulas in conjunctive normal form with two
-// literals per clause, using implication graphs and Kosaraju's SCC algorithm.
 package two_sat
 
-// TwoSAT uses zero-based variable IDs. Solve takes O(V+C) time and space,
-// where V is the number of variables and C is the number of clauses.
 type TwoSAT struct{ graph, reverse [][]int }
 
 func NewTwoSAT(n int) *TwoSAT { return &TwoSAT{make([][]int, 2*n), make([][]int, 2*n)} }
@@ -18,8 +14,6 @@ func (s *TwoSAT) imply(a, b int) {
 	s.reverse[b] = append(s.reverse[b], a)
 }
 
-// AddClause adds (variable a == aValue) OR (variable b == bValue).
-// Invalid variable IDs panic. Clauses may be added between Solve calls.
 func (s *TwoSAT) AddClause(a int, aValue bool, b int, bValue bool) {
 	n := len(s.graph) / 2
 	if a < 0 || a >= n || b < 0 || b >= n {
@@ -30,11 +24,8 @@ func (s *TwoSAT) AddClause(a int, aValue bool, b int, bValue bool) {
 	s.imply(v^1, u)
 }
 
-// Force requires the chosen variable to equal value.
 func (s *TwoSAT) Force(v int, value bool) { s.AddClause(v, value, v, value) }
 
-// Solve returns a satisfying assignment, or (nil,false) for an unsatisfiable
-// formula. Each call uses fresh traversal state and preserves the clauses.
 func (s *TwoSAT) Solve() ([]bool, bool) {
 	n := len(s.graph)
 	seen := make([]bool, n)

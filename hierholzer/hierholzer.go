@@ -1,12 +1,7 @@
-// Package hierholzer constructs Euler trails in directed or undirected graphs.
 package hierholzer
 
 import "github.com/Roonil03/Templates_GoLang/euler_path"
 
-// Trail returns the vertex sequence of an Euler trail, or (nil,false) if none
-// exists. Vertices are zero-based; invalid IDs panic. Loops and parallel edges
-// are distinct edges. Input edges are not modified. An edgeless graph returns
-// [0] when n>0 and an empty slice when n=0. Time and space are O(V+E).
 func Trail(n int, edges [][2]int, directed bool) ([]int, bool) {
 	start, _, ok := euler_path.Endpoints(n, edges, directed)
 	if !ok {

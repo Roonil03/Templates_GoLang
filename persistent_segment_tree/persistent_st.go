@@ -66,10 +66,8 @@ func (pst *PersistentSegmentTree[T]) Update(node *Node[T], l, r, idx int, val T)
 	return newNode
 }
 
-// Root returns a previously saved root by its zero-based version number.
 func (pst *PersistentSegmentTree[T]) Root(version int) *Node[T] { return pst.roots[version] }
 
-// Query aggregates assigned leaves in the inclusive range [l,r]. Empty ranges return false.
 func (pst *PersistentSegmentTree[T]) Query(root *Node[T], l, r int) (T, bool) {
 	return pst.query(root, 0, pst.size-1, l, r)
 }

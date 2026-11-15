@@ -4,13 +4,10 @@ type Number interface {
 	~int | ~int64 | ~float64
 }
 
-// FloydWarshall updates a dense matrix in place. All intermediate sums must fit the weight type.
-// For an integer sentinel indicating missing edges, use FloydWarshallWithInfinity.
 func FloydWarshall[W Number](n int, dist [][]W) {
 	floydWarshall(n, dist, nil)
 }
 
-// FloydWarshallWithInfinity skips missing paths marked with inf.
 func FloydWarshallWithInfinity[W Number](n int, dist [][]W, inf W) {
 	floydWarshall(n, dist, &inf)
 }

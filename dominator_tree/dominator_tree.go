@@ -1,11 +1,5 @@
-// Package dominator_tree computes immediate dominators in directed flow graphs.
 package dominator_tree
 
-// Build returns immediate dominators using the Lengauer-Tarjan algorithm with
-// path compression and simple linking. Vertices are zero-based. The root is its
-// own immediate dominator; unreachable vertices have -1. Parallel edges and loops
-// are allowed. Invalid IDs panic; root is ignored when n=0. Time is
-// O((V+E) log V), space O(V+E). The input edge list is preserved.
 func Build(n int, edges [][2]int, root int) []int {
 	graph := make([][]int, n)
 	for _, e := range edges {

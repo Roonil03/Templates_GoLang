@@ -1,9 +1,5 @@
-// Package maximum_clique finds an exact maximum clique in an undirected graph.
 package maximum_clique
 
-// MaximumClique stores O(V squared) adjacency. Solve uses branch-and-bound with
-// greedy-coloring upper bounds: O(V squared * 2^V) worst-case time and O(V squared)
-// space. Exact search is intended for small or moderately sized graphs.
 type MaximumClique struct{ adjacent [][]bool }
 
 func NewMaximumClique(n int) *MaximumClique {
@@ -14,8 +10,6 @@ func NewMaximumClique(n int) *MaximumClique {
 	return g
 }
 
-// AddEdge adds an undirected edge between zero-based IDs. Duplicate edges and
-// self-loops are harmless; self-loops do not contribute to clique size.
 func (g *MaximumClique) AddEdge(u, v int) {
 	if u != v {
 		g.adjacent[u][v] = true
@@ -23,13 +17,9 @@ func (g *MaximumClique) AddEdge(u, v int) {
 	}
 }
 
-// Solve returns the vertices of one maximum clique. It preserves the graph and
-// supports repeated calls. Ties are resolved by the deterministic search order.
 func (g *MaximumClique) Solve() []int {
 	best := []int{}
 	current := []int{}
-	// Each color class is independent. The prefix ending at position i can
-	// therefore contain a clique of size at most colors[i].
 	colorSort := func(candidates []int) (order, colors []int) {
 		remaining := append([]int(nil), candidates...)
 		for color := 1; len(remaining) > 0; color++ {

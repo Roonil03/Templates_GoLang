@@ -78,5 +78,4 @@ func (h *HLD) QueryPath(u, v int, queryFunc func(l, r int)) {
 	queryFunc(h.pos[u], h.pos[v])
 }
 
-// Position returns the index of v in the sequence used by QueryPath after Build.
 func (h *HLD) Position(v int) int { return h.pos[v] }

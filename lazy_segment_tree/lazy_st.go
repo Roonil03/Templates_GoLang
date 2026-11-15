@@ -35,7 +35,6 @@ func NewLazySegmentTree[V any, L any](size int, agg func(V, V) V, upd func(V, L,
 	}
 }
 
-// apply composes a newer update after any pending update at this node.
 func (st *LazySegmentTree[V, L]) apply(v, length int, tag L) {
 	st.tree[v] = st.upd(st.tree[v], tag, length)
 	if st.hasL[v] {
@@ -70,7 +69,6 @@ func (st *LazySegmentTree[V, L]) Update(v, tl, tr, l, r int, val L) {
 	st.tree[v] = st.agg(st.tree[v*2], st.tree[v*2+1])
 }
 
-// Query returns the aggregate of the inclusive range [l,r] in the zero-initialized tree.
 func (st *LazySegmentTree[V, L]) Query(l, r int) V {
 	if l < 0 || l > r || r >= st.size {
 		panic("invalid query range")

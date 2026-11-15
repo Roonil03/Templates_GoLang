@@ -1,8 +1,5 @@
-// Package hopcroft_karp computes maximum bipartite matchings.
 package hopcroft_karp
 
-// HopcroftKarp uses zero-based, separate left and right vertex sets.
-// MaximumMatching takes O((V+E) sqrt(V)) time and O(V+E) space.
 type HopcroftKarp struct {
 	adj        [][]int
 	rightCount int
@@ -16,8 +13,6 @@ func (h *HopcroftKarp) AddEdge(left, right int) {
 	h.adj[left] = append(h.adj[left], right)
 }
 
-// MaximumMatching recomputes and returns both partner arrays (-1 for unmatched)
-// and the matching cardinality. Duplicate edges are allowed.
 func (h *HopcroftKarp) MaximumMatching() (left, right []int, size int) {
 	left = make([]int, len(h.adj))
 	right = make([]int, h.rightCount)

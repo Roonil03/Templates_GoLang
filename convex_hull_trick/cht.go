@@ -27,8 +27,6 @@ func NewCHT[T SignedNumeric]() *CHT[T] {
 }
 
 func Intersect[T SignedNumeric](l1, l2, l3 Line[T]) bool {
-	// With descending slopes the middle line is redundant if its intersection
-	// with the first is at or beyond its intersection with the third.
 	if T(1)/T(2) != 0 {
 		diff := func(a, b T) *big.Rat {
 			x := new(big.Rat).SetFloat64(float64(a))
@@ -48,7 +46,6 @@ func Intersect[T SignedNumeric](l1, l2, l3 Line[T]) bool {
 	return left.Cmp(right) <= 0
 }
 
-// Add inserts a line in nonincreasing slope order. Floating coefficients must be finite.
 func (c *CHT[T]) Add(m, cVal T) {
 	if T(1)/T(2) != 0 && (math.IsInf(float64(m), 0) || math.IsNaN(float64(m)) || math.IsInf(float64(cVal), 0) || math.IsNaN(float64(cVal))) {
 		panic("line coefficients must be finite")
@@ -72,7 +69,6 @@ func (c *CHT[T]) Add(m, cVal T) {
 	c.lines = append(c.lines, newLine)
 }
 
-// Query returns the minimum at x. Line evaluations must fit the chosen numeric type.
 func (c *CHT[T]) Query(x T) T {
 	i := sort.Search(len(c.lines)-1, func(i int) bool { return c.lines[i].Eval(x) <= c.lines[i+1].Eval(x) })
 	return c.lines[i].Eval(x)

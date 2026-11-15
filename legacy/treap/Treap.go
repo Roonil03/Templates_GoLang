@@ -66,7 +66,6 @@ func (t *Treap) Delete(key int) *Treap {
 	return merge(a, c)
 }
 
-// Contains reports whether the tree contains key.
 func (t *Treap) Contains(key int) bool {
 	for t != nil {
 		if key == t.key {
