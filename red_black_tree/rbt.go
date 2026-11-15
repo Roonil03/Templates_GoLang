@@ -15,6 +15,7 @@ type Node[T cmp.Ordered] struct {
 	color               Color
 }
 
+// RedBlackTree orders keys using cmp.Compare, including its ordering of NaNs.
 type RedBlackTree[T cmp.Ordered] struct {
 	root *Node[T]
 }
@@ -47,7 +48,7 @@ func (t *RedBlackTree[T]) Insert(key T) {
 	x := t.root
 	for x != nil {
 		y = x
-		if node.Key < x.Key {
+		if cmp.Compare(node.Key, x.Key) < 0 {
 			x = x.left
 		} else {
 			x = x.right
@@ -56,9 +57,75 @@ func (t *RedBlackTree[T]) Insert(key T) {
 	node.parent = y
 	if y == nil {
 		t.root = node
-	} else if node.Key < y.Key {
+	} else if cmp.Compare(node.Key, y.Key) < 0 {
 		y.left = node
 	} else {
 		y.right = node
 	}
+	t.balanceInsert(node)
+}
+func (t *RedBlackTree[T]) rightRotate(x *Node[T]) {
+	y := x.left
+	x.left = y.right
+	if y.right != nil {
+		y.right.parent = x
+	}
+	y.parent = x.parent
+	if x.parent == nil {
+		t.root = y
+	} else if x == x.parent.right {
+		x.parent.right = y
+	} else {
+		x.parent.left = y
+	}
+	y.right = x
+	x.parent = y
+}
+
+func (t *RedBlackTree[T]) balanceInsert(n *Node[T]) {
+	for n.parent != nil && n.parent.color == Red {
+		p := n.parent
+		g := p.parent
+		left := p == g.left
+		uncle := g.left
+		if left {
+			uncle = g.right
+		}
+		if uncle != nil && uncle.color == Red {
+			p.color, uncle.color, g.color = Black, Black, Red
+			n = g
+			continue
+		}
+		if left {
+			if n == p.right {
+				t.leftRotate(p)
+				p = n
+			}
+			t.rightRotate(g)
+		} else {
+			if n == p.left {
+				t.rightRotate(p)
+				p = n
+			}
+			t.leftRotate(g)
+		}
+		p.color, g.color = Black, Red
+	}
+	t.root.color = Black
+}
+
+// Contains reports whether key has been inserted.
+func (t *RedBlackTree[T]) Contains(key T) bool {
+	for n := t.root; n != nil; {
+		order := cmp.Compare(key, n.Key)
+		if order == 0 {
+			return true
+		}
+		if order < 0 {
+			n = n.left
+		} else {
+			n = n.right
+		}
+	}
+	return false
 }

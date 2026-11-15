@@ -1,8 +1,8 @@
 package prim
 
 type Edge struct {
-	to     int
-	weight int
+	To     int
+	Weight int
 }
 
 type Item struct {
@@ -62,7 +62,7 @@ func Prim(n, start int, adj [][]Edge) int {
 	visited := make([]bool, n)
 	pq := &PriorityQueue{}
 	pq.Push(Item{to: start, weight: 0})
-	
+
 	total := 0
 	for len(pq.data) > 0 {
 		curr := pq.Pop()
@@ -73,8 +73,8 @@ func Prim(n, start int, adj [][]Edge) int {
 		visited[u] = true
 		total += curr.weight
 		for _, edge := range adj[u] {
-			if !visited[edge.to] {
-				pq.Push(Item{to: edge.to, weight: edge.weight})
+			if !visited[edge.To] {
+				pq.Push(Item{to: edge.To, weight: edge.Weight})
 			}
 		}
 	}

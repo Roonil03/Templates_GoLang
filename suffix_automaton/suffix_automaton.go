@@ -15,7 +15,7 @@ type SuffixAutomaton[T comparable] struct {
 
 func NewSuffixAutomaton[T comparable](capacity, sigma int, val func(T) int) *SuffixAutomaton[T] {
 	sa := &SuffixAutomaton[T]{
-		Nodes: make([]Node, 1, capacity*2),
+		Nodes: make([]Node, 1, 1+capacity*2),
 		Last:  0,
 		sigma: sigma,
 		val:   val,

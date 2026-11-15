@@ -10,6 +10,9 @@ func NewFenwick(n int) *Fenwick {
 }
 
 func (f *Fenwick) Update(i, v int) {
+	if i <= 0 {
+		panic("Fenwick updates use one-based indices")
+	}
 	for ; i <= f.n; i += i & -i {
 		f.tree[i] += v
 	}

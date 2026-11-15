@@ -13,7 +13,7 @@ type SuffixAutomaton struct {
 
 func NewSuffixAutomaton(capacity int) *SuffixAutomaton {
 	sa := &SuffixAutomaton{
-		Nodes: make([]Node, 1, capacity*2),
+		Nodes: make([]Node, 1, 1+capacity*2),
 		Last:  0,
 	}
 	sa.Nodes[0].Link = -1

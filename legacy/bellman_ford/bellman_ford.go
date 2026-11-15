@@ -1,14 +1,14 @@
 package bellman_ford
 
 type Edge struct {
-	to     int
-	weight int
+	To     int
+	Weight int
 }
 
 func SPFA(n, start int, adj [][]Edge, inf int) ([]int, bool) {
 	dist := make([]int, n)
 	inQueue := make([]bool, n)
-	count := make([]int, n)
+	pathLen := make([]int, n)
 	for i := 0; i < n; i++ {
 		dist[i] = inf
 	}
@@ -22,17 +22,17 @@ func SPFA(n, start int, adj [][]Edge, inf int) ([]int, bool) {
 		inQueue[u] = false
 
 		for _, edge := range adj[u] {
-			v := edge.to
-			weight := edge.weight
+			v := edge.To
+			weight := edge.Weight
 			if dist[u]+weight < dist[v] {
 				dist[v] = dist[u] + weight
+				pathLen[v] = pathLen[u] + 1
+				if pathLen[v] >= n {
+					return nil, true
+				}
 				if !inQueue[v] {
 					q = append(q, v)
 					inQueue[v] = true
-					count[v]++
-					if count[v] >= n {
-						return nil, true 
-					}
 				}
 			}
 		}

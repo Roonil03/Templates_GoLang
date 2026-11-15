@@ -5,8 +5,8 @@ type Number interface {
 }
 
 type Edge[W Number] struct {
-	to     int
-	weight W
+	To     int
+	Weight W
 }
 
 type Item[W Number] struct {
@@ -66,7 +66,7 @@ func Prim[W Number](n, start int, adj [][]Edge[W]) W {
 	visited := make([]bool, n)
 	pq := &PriorityQueue[W]{}
 	pq.Push(Item[W]{to: start, weight: 0})
-	
+
 	var total W
 	for len(pq.data) > 0 {
 		curr := pq.Pop()
@@ -77,8 +77,8 @@ func Prim[W Number](n, start int, adj [][]Edge[W]) W {
 		visited[u] = true
 		total += curr.weight
 		for _, edge := range adj[u] {
-			if !visited[edge.to] {
-				pq.Push(Item[W]{to: edge.to, weight: edge.weight})
+			if !visited[edge.To] {
+				pq.Push(Item[W]{to: edge.To, weight: edge.Weight})
 			}
 		}
 	}

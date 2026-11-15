@@ -27,6 +27,9 @@ func (c *LRUCache) Get(key int) (int, bool) {
 }
 
 func (c *LRUCache) Put(key, val int) {
+	if c.capacity <= 0 {
+		return
+	}
 	if el, ok := c.cache[key]; ok {
 		c.list.MoveToFront(el)
 		el.Value = entry{key, val}

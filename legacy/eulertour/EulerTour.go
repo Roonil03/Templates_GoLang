@@ -29,5 +29,13 @@ func (e *EulerTour) dfs(u, p int) {
 
 func (e *EulerTour) Build(root int) {
 	e.timer = 0
+	for v := range e.tin {
+		e.tin[v], e.tout[v] = 0, 0
+	}
 	e.dfs(root, -1)
+}
+
+// IsAncestor reports whether u lies on the path from the root to v in the built tree.
+func (e *EulerTour) IsAncestor(u, v int) bool {
+	return e.tin[u] > 0 && e.tin[u] <= e.tin[v] && e.tout[v] <= e.tout[u]
 }

@@ -47,8 +47,12 @@ func (pst *PersistentSegmentTree) Update(node *Node, l, r, idx int, val int64) *
 		newNode.right = pst.Update(rn, mid+1, r, idx, val)
 	}
 	var lv, rv int64
-	if newNode.left != nil { lv = newNode.left.val }
-	if newNode.right != nil { rv = newNode.right.val }
+	if newNode.left != nil {
+		lv = newNode.left.val
+	}
+	if newNode.right != nil {
+		rv = newNode.right.val
+	}
 	if newNode.left != nil && newNode.right != nil {
 		newNode.val = pst.agg(lv, rv)
 	} else if newNode.left != nil {
@@ -57,4 +61,32 @@ func (pst *PersistentSegmentTree) Update(node *Node, l, r, idx int, val int64) *
 		newNode.val = rv
 	}
 	return newNode
+}
+
+// Root returns a previously saved root by its zero-based version number.
+func (pst *PersistentSegmentTree) Root(version int) *Node { return pst.roots[version] }
+
+// Query aggregates assigned leaves in the inclusive range [l,r]. Empty ranges return false.
+func (pst *PersistentSegmentTree) Query(root *Node, l, r int) (int64, bool) {
+	return pst.query(root, 0, pst.size-1, l, r)
+}
+
+func (pst *PersistentSegmentTree) query(node *Node, lo, hi, l, r int) (int64, bool) {
+	if node == nil || hi < l || lo > r || lo > hi || l > r {
+		var zero int64
+		return zero, false
+	}
+	if l <= lo && hi <= r {
+		return node.val, true
+	}
+	mid := lo + (hi-lo)/2
+	a, okA := pst.query(node.left, lo, mid, l, r)
+	b, okB := pst.query(node.right, mid+1, hi, l, r)
+	if !okA {
+		return b, okB
+	}
+	if !okB {
+		return a, true
+	}
+	return pst.agg(a, b), true
 }

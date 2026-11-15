@@ -3,13 +3,13 @@ package kruskal
 import "sort"
 
 type Edge struct {
-	u, v   int
-	weight int
+	U, V   int
+	Weight int
 }
 
 func Kruskal(n int, edges []Edge) ([]Edge, int) {
 	sort.Slice(edges, func(i, j int) bool {
-		return edges[i].weight < edges[j].weight
+		return edges[i].Weight < edges[j].Weight
 	})
 
 	parent := make([]int, n)
@@ -47,9 +47,9 @@ func Kruskal(n int, edges []Edge) ([]Edge, int) {
 	var mst []Edge
 	total := 0
 	for _, edge := range edges {
-		if union(edge.u, edge.v) {
+		if union(edge.U, edge.V) {
 			mst = append(mst, edge)
-			total += edge.weight
+			total += edge.Weight
 		}
 	}
 

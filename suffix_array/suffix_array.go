@@ -10,6 +10,8 @@ type SuffixArray[T cmp.Ordered] struct {
 	LCP []int
 }
 
+// NewSuffixArray builds suffix and LCP arrays using the built-in ordering and
+// equality of elements. Floating input elements must not be NaN.
 func NewSuffixArray[T cmp.Ordered](s []T) *SuffixArray[T] {
 	n := len(s)
 	if n == 0 {

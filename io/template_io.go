@@ -74,7 +74,7 @@ func (fs *FastScanner) rString() string {
 		}
 		c, err = fs.r.ReadByte()
 	}
-	for c != ' ' && c != '\n' && c != '\r' && c != '\t' {
+	for err == nil && c != ' ' && c != '\n' && c != '\r' && c != '\t' {
 		buf = append(buf, c)
 		c, err = fs.r.ReadByte()
 		if err != nil {
@@ -184,6 +184,9 @@ func gcd(a, b int) int {
 }
 
 func lcm(a, b int) int {
+	if a == 0 || b == 0 {
+		return 0
+	}
 	return a / gcd(a, b) * b
 }
 

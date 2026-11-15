@@ -10,6 +10,7 @@ type Node[T cmp.Ordered] struct {
 	mark                bool
 }
 
+// FibonacciHeap uses the built-in ordering of keys. Floating keys must not be NaN.
 type FibonacciHeap[T cmp.Ordered] struct {
 	minNode *Node[T]
 	size    int

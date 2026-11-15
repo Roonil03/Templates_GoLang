@@ -17,6 +17,9 @@ func NewFenwick2D[T cmp.Ordered](n, m int, add func(T, T) T) *Fenwick2D[T] {
 }
 
 func (f *Fenwick2D[T]) Update(x, y int, v T) {
+	if x <= 0 || y <= 0 {
+		panic("Fenwick updates use one-based indices")
+	}
 	for i := x; i <= f.n; i += i & -i {
 		for j := y; j <= f.m; j += j & -j {
 			f.tree[i][j] = f.add(f.tree[i][j], v)

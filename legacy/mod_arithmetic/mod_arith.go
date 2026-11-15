@@ -1,40 +1,53 @@
 package mod_arithmetic
 
-func AddMod(a, b, mod int64) int64 {
-	a %= mod
-	b %= mod
-	res := a + b
-	if res >= mod {
-		res -= mod
+import "math/bits"
+
+// residue normalizes x for a positive modulus.
+func residue(x, mod int64) int64 {
+	if mod <= 0 {
+		panic("modulus must be positive")
 	}
-	return res
+	x %= mod
+	if x < 0 {
+		x += mod
+	}
+	return x
+}
+
+func AddMod(a, b, mod int64) int64 {
+	a, b = residue(a, mod), residue(b, mod)
+	if a >= mod-b {
+		return a - (mod - b)
+	}
+	return a + b
 }
 
 func SubMod(a, b, mod int64) int64 {
-	a %= mod
-	b %= mod
-	res := a - b
-	if res < 0 {
-		res += mod
+	a, b = residue(a, mod), residue(b, mod)
+	if a < b {
+		return mod - (b - a)
 	}
-	return res
+	return a - b
 }
 
 func MulMod(a, b, mod int64) int64 {
-	a %= mod
-	b %= mod
-	return (a * b) % mod
+	hi, lo := bits.Mul64(uint64(residue(a, mod)), uint64(residue(b, mod)))
+	_, rem := bits.Div64(hi, lo, uint64(mod))
+	return int64(rem)
 }
 
 func PowerMod(base, exp, mod int64) int64 {
-	var res int64 = 1
-	base %= mod
+	if exp < 0 {
+		panic("exponent must be nonnegative")
+	}
+	base = residue(base, mod)
+	result := int64(1) % mod
 	for exp > 0 {
 		if exp&1 == 1 {
-			res = (res * base) % mod
+			result = MulMod(result, base, mod)
 		}
-		base = (base * base) % mod
+		base = MulMod(base, base, mod)
 		exp >>= 1
 	}
-	return res
+	return result
 }
