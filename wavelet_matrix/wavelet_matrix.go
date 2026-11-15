@@ -2,9 +2,7 @@
 package wavelet_matrix
 
 import (
-	"cmp"
 	"math/bits"
-	"slices"
 	"sort"
 )
 
@@ -12,7 +10,7 @@ import (
 // Construction takes O(n log n) time; queries take O(log(sigma+1)) time,
 // where sigma is the distinct value count. Values use cmp.Compare ordering,
 // including its ordering of NaNs. The zero value is an empty matrix.
-type WaveletMatrix[T cmp.Ordered] struct {
+type WaveletMatrix[T ordered] struct {
 	values []T
 	prefix [][]int
 	zeros  []int
@@ -20,10 +18,21 @@ type WaveletMatrix[T cmp.Ordered] struct {
 }
 
 // NewWaveletMatrix copies data; subsequent changes to data have no effect.
-func NewWaveletMatrix[T cmp.Ordered](data []T) *WaveletMatrix[T] {
-	values := slices.Clone(data)
-	slices.Sort(values)
-	values = slices.CompactFunc(values, func(a, b T) bool { return cmp.Compare(a, b) == 0 })
+func NewWaveletMatrix[T ordered](data []T) *WaveletMatrix[T] {
+	values := append(data[:0:0], data...)
+	sort.Slice(values, func(i, j int) bool { return compare(values[i], values[j]) < 0 })
+	unique := 0
+	for _, value := range values {
+		if unique == 0 || compare(values[unique-1], value) != 0 {
+			values[unique] = value
+			unique++
+		}
+	}
+	var zero T
+	for i := unique; i < len(values); i++ {
+		values[i] = zero
+	}
+	values = values[:unique]
 	w := &WaveletMatrix[T]{values: values, n: len(data)}
 	if len(values) < 2 {
 		return w
@@ -67,7 +76,7 @@ func (w *WaveletMatrix[T]) check(l, r int) {
 	}
 }
 func (w *WaveletMatrix[T]) lowerBound(value T) int {
-	return sort.Search(len(w.values), func(i int) bool { return cmp.Compare(w.values[i], value) >= 0 })
+	return sort.Search(len(w.values), func(i int) bool { return compare(w.values[i], value) >= 0 })
 }
 
 // Kth returns the zero-based kth smallest value in data[l:r].
@@ -125,7 +134,7 @@ func (w *WaveletMatrix[T]) CountLess(l, r int, value T) int {
 func (w *WaveletMatrix[T]) Count(l, r int, value T) int {
 	w.check(l, r)
 	rank := w.lowerBound(value)
-	if rank == len(w.values) || cmp.Compare(w.values[rank], value) != 0 {
+	if rank == len(w.values) || compare(w.values[rank], value) != 0 {
 		return 0
 	}
 	return w.countLessRank(l, r, rank+1) - w.countLessRank(l, r, rank)
@@ -135,8 +144,24 @@ func (w *WaveletMatrix[T]) Count(l, r int, value T) int {
 // It panics unless 0 <= l <= r <= Len().
 func (w *WaveletMatrix[T]) RangeFreq(l, r int, low, high T) int {
 	w.check(l, r)
-	if cmp.Compare(low, high) >= 0 {
+	if compare(low, high) >= 0 {
 		return 0
 	}
 	return w.countLessRank(l, r, w.lowerBound(high)) - w.countLessRank(l, r, w.lowerBound(low))
+}
+
+type ordered interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64 | ~string
+}
+
+func compare[T ordered](x, y T) int {
+	if x < y || (x != x && y == y) {
+		return -1
+	}
+	if x > y || (x == x && y != y) {
+		return 1
+	}
+	return 0
 }

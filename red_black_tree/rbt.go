@@ -1,7 +1,5 @@
 package red_black_tree
 
-import "cmp"
-
 type Color bool
 
 const (
@@ -9,18 +7,18 @@ const (
 	Black Color = false
 )
 
-type Node[T cmp.Ordered] struct {
+type Node[T ordered] struct {
 	Key                 T
 	left, right, parent *Node[T]
 	color               Color
 }
 
 // RedBlackTree orders keys using cmp.Compare, including its ordering of NaNs.
-type RedBlackTree[T cmp.Ordered] struct {
+type RedBlackTree[T ordered] struct {
 	root *Node[T]
 }
 
-func NewRedBlackTree[T cmp.Ordered]() *RedBlackTree[T] {
+func NewRedBlackTree[T ordered]() *RedBlackTree[T] {
 	return &RedBlackTree[T]{}
 }
 
@@ -48,7 +46,7 @@ func (t *RedBlackTree[T]) Insert(key T) {
 	x := t.root
 	for x != nil {
 		y = x
-		if cmp.Compare(node.Key, x.Key) < 0 {
+		if compare(node.Key, x.Key) < 0 {
 			x = x.left
 		} else {
 			x = x.right
@@ -57,7 +55,7 @@ func (t *RedBlackTree[T]) Insert(key T) {
 	node.parent = y
 	if y == nil {
 		t.root = node
-	} else if cmp.Compare(node.Key, y.Key) < 0 {
+	} else if compare(node.Key, y.Key) < 0 {
 		y.left = node
 	} else {
 		y.right = node
@@ -117,7 +115,7 @@ func (t *RedBlackTree[T]) balanceInsert(n *Node[T]) {
 // Contains reports whether key has been inserted.
 func (t *RedBlackTree[T]) Contains(key T) bool {
 	for n := t.root; n != nil; {
-		order := cmp.Compare(key, n.Key)
+		order := compare(key, n.Key)
 		if order == 0 {
 			return true
 		}
@@ -128,4 +126,20 @@ func (t *RedBlackTree[T]) Contains(key T) bool {
 		}
 	}
 	return false
+}
+
+type ordered interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64 | ~string
+}
+
+func compare[T ordered](x, y T) int {
+	if x < y || (x != x && y == y) {
+		return -1
+	}
+	if x > y || (x == x && y != y) {
+		return 1
+	}
+	return 0
 }

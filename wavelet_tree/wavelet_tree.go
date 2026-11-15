@@ -2,8 +2,6 @@
 package wavelet_tree
 
 import (
-	"cmp"
-	"slices"
 	"sort"
 )
 
@@ -11,7 +9,7 @@ import (
 // time and O(n log(sigma+1)) space, where sigma is the distinct value count.
 // Queries take O(log(sigma+1)) time. Values use cmp.Compare ordering,
 // including its ordering of NaNs. The zero value is an empty tree.
-type WaveletTree[T cmp.Ordered] struct {
+type WaveletTree[T ordered] struct {
 	values []T
 	root   *node
 	n      int
@@ -24,10 +22,21 @@ type node struct {
 }
 
 // NewWaveletTree copies data; later changes to data do not affect the tree.
-func NewWaveletTree[T cmp.Ordered](data []T) *WaveletTree[T] {
-	values := slices.Clone(data)
-	slices.Sort(values)
-	values = slices.CompactFunc(values, func(a, b T) bool { return cmp.Compare(a, b) == 0 })
+func NewWaveletTree[T ordered](data []T) *WaveletTree[T] {
+	values := append(data[:0:0], data...)
+	sort.Slice(values, func(i, j int) bool { return compare(values[i], values[j]) < 0 })
+	unique := 0
+	for _, value := range values {
+		if unique == 0 || compare(values[unique-1], value) != 0 {
+			values[unique] = value
+			unique++
+		}
+	}
+	var zero T
+	for i := unique; i < len(values); i++ {
+		values[i] = zero
+	}
+	values = values[:unique]
 	w := &WaveletTree[T]{values: values, n: len(data)}
 	if len(data) == 0 {
 		return w
@@ -71,7 +80,7 @@ func (w *WaveletTree[T]) check(l, r int) {
 }
 
 func (w *WaveletTree[T]) lowerBound(value T) int {
-	return sort.Search(len(w.values), func(i int) bool { return cmp.Compare(w.values[i], value) >= 0 })
+	return sort.Search(len(w.values), func(i int) bool { return compare(w.values[i], value) >= 0 })
 }
 
 // Kth returns the zero-based kth smallest value in data[l:r].
@@ -118,7 +127,7 @@ func (w *WaveletTree[T]) CountLess(l, r int, value T) int {
 func (w *WaveletTree[T]) Count(l, r int, value T) int {
 	w.check(l, r)
 	rank := w.lowerBound(value)
-	if rank == len(w.values) || cmp.Compare(w.values[rank], value) != 0 {
+	if rank == len(w.values) || compare(w.values[rank], value) != 0 {
 		return 0
 	}
 	return countLess(w.root, l, r, rank+1) - countLess(w.root, l, r, rank)
@@ -128,8 +137,24 @@ func (w *WaveletTree[T]) Count(l, r int, value T) int {
 // It panics unless 0 <= l <= r <= Len().
 func (w *WaveletTree[T]) RangeFreq(l, r int, low, high T) int {
 	w.check(l, r)
-	if cmp.Compare(low, high) >= 0 {
+	if compare(low, high) >= 0 {
 		return 0
 	}
 	return countLess(w.root, l, r, w.lowerBound(high)) - countLess(w.root, l, r, w.lowerBound(low))
+}
+
+type ordered interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64 | ~string
+}
+
+func compare[T ordered](x, y T) int {
+	if x < y || (x != x && y == y) {
+		return -1
+	}
+	if x > y || (x == x && y != y) {
+		return 1
+	}
+	return 0
 }

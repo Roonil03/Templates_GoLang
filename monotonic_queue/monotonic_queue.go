@@ -1,31 +1,29 @@
 // Package monotonic_queue provides a FIFO queue with constant-time minimum queries.
 package monotonic_queue
 
-import "cmp"
-
 // MonotonicQueue retains a nondecreasing deque of minimum candidates alongside
 // its FIFO values. Equal values are retained. Values use cmp.Compare ordering,
 // including NaNs. The zero value is ready to use. Space is O(n) in queue length;
 // Push and Pop take amortized O(1) time, and Min and Len take O(1) time.
-type MonotonicQueue[T cmp.Ordered] struct {
+type MonotonicQueue[T ordered] struct {
 	values []T
 	head   int
 	minima []entry[T]
 	first  int
 }
-type entry[T cmp.Ordered] struct {
+type entry[T ordered] struct {
 	value T
 	index int
 }
 
 // NewMonotonicQueue returns an empty queue.
-func NewMonotonicQueue[T cmp.Ordered]() *MonotonicQueue[T] { return &MonotonicQueue[T]{} }
+func NewMonotonicQueue[T ordered]() *MonotonicQueue[T] { return &MonotonicQueue[T]{} }
 
 // Push appends value to the FIFO queue and discards larger minimum candidates.
 func (q *MonotonicQueue[T]) Push(value T) {
 	index := len(q.values)
 	q.values = append(q.values, value)
-	for len(q.minima) > q.first && cmp.Compare(q.minima[len(q.minima)-1].value, value) > 0 {
+	for len(q.minima) > q.first && compare(q.minima[len(q.minima)-1].value, value) > 0 {
 		q.minima[len(q.minima)-1] = entry[T]{}
 		q.minima = q.minima[:len(q.minima)-1]
 	}
@@ -80,7 +78,7 @@ func (q *MonotonicQueue[T]) Len() int { return len(q.values) - q.head }
 
 // SlidingWindowMin returns the minimum in every consecutive window of size k.
 // It takes O(n) time and O(k) auxiliary space. It panics unless 1 <= k <= len(data).
-func SlidingWindowMin[T cmp.Ordered](data []T, k int) []T {
+func SlidingWindowMin[T ordered](data []T, k int) []T {
 	if k < 1 || k > len(data) {
 		panic("monotonic_queue: invalid window size")
 	}
@@ -97,4 +95,20 @@ func SlidingWindowMin[T cmp.Ordered](data []T, k int) []T {
 		}
 	}
 	return answer
+}
+
+type ordered interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64 | ~string
+}
+
+func compare[T ordered](x, y T) int {
+	if x < y || (x != x && y == y) {
+		return -1
+	}
+	if x > y || (x == x && y != y) {
+		return 1
+	}
+	return 0
 }

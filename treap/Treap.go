@@ -1,18 +1,17 @@
 package treap
 
 import (
-	"cmp"
 	"math/rand"
 )
 
 // Treap orders keys using cmp.Compare, including its ordering of NaNs.
-type Treap[K cmp.Ordered] struct {
+type Treap[K ordered] struct {
 	key         K
 	pri, sz     int
 	left, right *Treap[K]
 }
 
-func NewTreap[K cmp.Ordered](key K) *Treap[K] {
+func NewTreap[K ordered](key K) *Treap[K] {
 	return &Treap[K]{key: key, pri: rand.Int(), sz: 1}
 }
 
@@ -26,11 +25,11 @@ func (t *Treap[K]) recalc() {
 	}
 }
 
-func splitStrict[K cmp.Ordered](t *Treap[K], key K) (*Treap[K], *Treap[K]) {
+func splitStrict[K ordered](t *Treap[K], key K) (*Treap[K], *Treap[K]) {
 	if t == nil {
 		return nil, nil
 	}
-	if cmp.Compare(t.key, key) < 0 {
+	if compare(t.key, key) < 0 {
 		l, r := splitStrict(t.right, key)
 		t.right = l
 		t.recalc()
@@ -42,11 +41,11 @@ func splitStrict[K cmp.Ordered](t *Treap[K], key K) (*Treap[K], *Treap[K]) {
 	return l, t
 }
 
-func splitEq[K cmp.Ordered](t *Treap[K], key K) (*Treap[K], *Treap[K]) {
+func splitEq[K ordered](t *Treap[K], key K) (*Treap[K], *Treap[K]) {
 	if t == nil {
 		return nil, nil
 	}
-	if cmp.Compare(key, t.key) < 0 {
+	if compare(key, t.key) < 0 {
 		l, r := splitEq(t.left, key)
 		t.left = r
 		t.recalc()
@@ -58,7 +57,7 @@ func splitEq[K cmp.Ordered](t *Treap[K], key K) (*Treap[K], *Treap[K]) {
 	return t, r
 }
 
-func merge[K cmp.Ordered](a, b *Treap[K]) *Treap[K] {
+func merge[K ordered](a, b *Treap[K]) *Treap[K] {
 	if a == nil {
 		return b
 	}
@@ -91,7 +90,7 @@ func (t *Treap[K]) Delete(key K) *Treap[K] {
 // Contains reports whether the tree contains key.
 func (t *Treap[K]) Contains(key K) bool {
 	for t != nil {
-		order := cmp.Compare(key, t.key)
+		order := compare(key, t.key)
 		if order == 0 {
 			return true
 		}
@@ -102,4 +101,20 @@ func (t *Treap[K]) Contains(key K) bool {
 		}
 	}
 	return false
+}
+
+type ordered interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64 | ~string
+}
+
+func compare[T ordered](x, y T) int {
+	if x < y || (x != x && y == y) {
+		return -1
+	}
+	if x > y || (x == x && y != y) {
+		return 1
+	}
+	return 0
 }

@@ -1,15 +1,13 @@
 package segment_tree
 
-import "cmp"
-
-type SegmentTree[T cmp.Ordered] struct {
+type SegmentTree[T ordered] struct {
 	n        int
 	data     []T
 	identity T
 	merge    func(T, T) T
 }
 
-func NewSegmentTree[T cmp.Ordered](arr []T, identity T, merge func(T, T) T) *SegmentTree[T] {
+func NewSegmentTree[T ordered](arr []T, identity T, merge func(T, T) T) *SegmentTree[T] {
 	n := len(arr)
 	size := 1
 	for size < n {
@@ -54,4 +52,10 @@ func (st *SegmentTree[T]) Query(l, r int) T {
 		r >>= 1
 	}
 	return st.merge(resL, resR)
+}
+
+type ordered interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64 | ~string
 }

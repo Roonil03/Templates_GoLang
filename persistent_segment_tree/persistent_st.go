@@ -1,19 +1,17 @@
 package persistent_segment_tree
 
-import "cmp"
-
-type Node[T cmp.Ordered] struct {
+type Node[T ordered] struct {
 	left, right *Node[T]
 	val         T
 }
 
-type PersistentSegmentTree[T cmp.Ordered] struct {
+type PersistentSegmentTree[T ordered] struct {
 	roots []*Node[T]
 	size  int
 	agg   func(T, T) T
 }
 
-func NewPersistentSegmentTree[T cmp.Ordered](size int, agg func(T, T) T) *PersistentSegmentTree[T] {
+func NewPersistentSegmentTree[T ordered](size int, agg func(T, T) T) *PersistentSegmentTree[T] {
 	return &PersistentSegmentTree[T]{
 		roots: make([]*Node[T], 0),
 		size:  size,
@@ -94,4 +92,10 @@ func (pst *PersistentSegmentTree[T]) query(node *Node[T], lo, hi, l, r int) (T, 
 		return a, true
 	}
 	return pst.agg(a, b), true
+}
+
+type ordered interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64 | ~string
 }
