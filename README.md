@@ -1,27 +1,28 @@
 # Go Competitive Programming Templates
 
 <p align="center">
-  <a href="https://pkg.go.dev/github.com/Roonil03/Templates_GoLang"><img src="https://pkg.go.dev/badge/github.com/roonil03/templates_golang.svg" alt="Go Reference"></a>
-  <a href="https://goreportcard.com/report/github.com/roonil03/templates_golang"><img src="https://goreportcard.com/badge/github.com/roonil03/templates_golang" alt="Go Report Card"></a>
+  <a href="https://pkg.go.dev/github.com/Roonil03/Templates_GoLang"><img src="https://pkg.go.dev/badge/github.com/Roonil03/Templates_GoLang.svg" alt="Go Reference"></a>
+  <a href="https://github.com/Roonil03/Templates_GoLang/blob/main/go.mod"><img src="https://img.shields.io/badge/Go-1.23-00ADD8?logo=go" alt="Go 1.23"></a>
   <a href="https://github.com/Roonil03/Templates_GoLang/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Roonil03/Templates_GoLang" alt="License"></a>
-  <a href="https://github.com/Roonil03/Templates_GoLang/releases"><img src="https://img.shields.io/github/v/release/Roonil03/Templates_GoLang?include_prereleases&style=flat-square" alt="Latest Release"></a>
+  <a href="https://pkg.go.dev/github.com/Roonil03/Templates_GoLang?tab=versions"><img src="https://img.shields.io/github/v/tag/Roonil03/Templates_GoLang?filter=v%2A&amp;label=module" alt="Tagged module version"></a>
 </p>
 
-To navigate or import the specific components of this repository directly, utilize the primary reference index below. Each structure links directly to its source implementation.
+This module provides competitive programming templates for Go 1.23 and later. Each link below opens the source file. For Go 1.20, use the [legacy catalog](./legacy/README.md).
 
-### Repository Navigation Index
+## Repository Navigation Index
+
 - **Core Collections & Utilities**
-  - [Deque Implementation](./deque/deque.go)
+  - [Fast I/O submission template](./io/template_io.go)
+  - [Deque Implementation](./deque/Deque.go)
   - [LRU Cache Implementation](./lru_cache/lru_cache.go)
-  - [Priority Queue / Heap Implementation](./heap/heap.go)
 - **Advanced Tree Structures**
   - [Segment Tree Implementation](./segment_tree/segment_tree.go)
   - [Fenwick Tree (1D BIT) Implementation](./fenwick/fenwick.go)
   - [2D Fenwick Tree Implementation](./fenwick2d/fenwick2d.go)
-  - [Treap Implementation](./treap/treap.go)
+  - [Treap Implementation](./treap/Treap.go)
 - **Graph & Advanced Relations**
   - [Disjoint Set Union (DSU) Implementation](./union_find/union_find.go)
-  - [Rope Data Structure](./rope/rope.go)
+  - [Rope Data Structure](./rope/Rope.go)
   - [Euler Tour Implementation](./euler_tour/euler_tour.go)
 - **Advanced Query & Sequence Processing**
   - [Sparse Table Implementation](./sparse_table/sparse_table.go)
@@ -57,42 +58,47 @@ To navigate or import the specific components of this repository directly, utili
 - **Advanced Self-Balancing Systems**
   - [Fibonacci Heap](./fibonacci_heap/fib_heap.go)
   - [Red-Black Tree](./red_black_tree/rbt.go)
-- **Backward Compatibility**
-  - [Legacy Modules (Go <= 1.20)](./legacy/)
-
----
-
-## Repository Metadata & Verification
-
-| Property | Value / Status | Description |
-| :--- | :--- | :--- |
-| **Module Path** | `github.com/Roonil03/Templates_GoLang` | Canonical Go module import string |
-| **Go Compliance** | `>= go 1.21` | Supports generic type parameters and `cmp.Ordered` |
-| **Legacy Support** | `go 1.20` and below | Contained inside isolated local subdirectory |
-| **Ecosystem Status** | Stable / Production-Ready | Verified algorithms optimized for compilation footprint |
-| **Stability Level** | v1.x.x Series | Strict SemVer adherence across structural interfaces |
-
-A formal, high-performance library of advanced data structures optimized for competitive programming and complex algorithmic tasks in Go. Every root structure is fully type-safe, leveraging Go Generics to allow flexible map-like and collection-level templating.
+- **Tree queries**
+  - [Binary-lifting LCA](./lca/lca.go) — Find the lowest common ancestor or the k-th ancestor in a rooted forest.
+  - [Centroid decomposition](./centroid_decomposition/centroid_decomposition.go) — Build the centroid-parent array of an undirected forest.
+- **Graphs**
+  - [Hopcroft–Karp matching](./hopcroft_karp/hopcroft_karp.go) — Return maximum matching partners on both sides of a bipartite graph.
+  - [Euler path endpoints](./euler_path/euler_path.go) — Check connectivity and degrees in a directed or undirected multigraph.
+  - [Hierholzer’s algorithm](./hierholzer/hierholzer.go) — Return a trail that uses every edge exactly once.
+  - [2-SAT](./two_sat/two_sat.go) — Add two-literal clauses and recover a satisfying assignment.
+  - [Maximum clique with coloring bounds](./maximum_clique/maximum_clique.go) — Find an exact maximum clique with a greedy-coloring upper bound.
+  - [Dominator tree](./dominator_tree/dominator_tree.go) — Compute immediate dominators from a source in a directed graph.
+- **Number theory**
+  - [Sieve of Eratosthenes](./sieve/sieve.go) — Build a primality table or list all primes through an inclusive bound.
+  - [Smallest prime factor](./smallest_prime_factor/smallest_prime_factor.go) — Build a linear sieve and factor integers using its table.
+  - [Chinese remainder theorem](./chinese_remainder/chinese_remainder.go) — Combine congruences, including compatible non-coprime moduli.
+  - [XOR linear basis](./xor_basis/xor_basis.go) — Insert unsigned vectors, test representability, and maximize a subset XOR.
+  - [Number theoretic transform](./ntt/ntt.go) — Transform coefficients and convolve polynomials modulo 998244353.
+- **Range queries and collections**
+  - [Wavelet tree](./wavelet_tree/wavelet_tree.go) — Find order statistics and count values in a half-open range.
+  - [Wavelet matrix](./wavelet_matrix/wavelet_matrix.go) — Answer the same static range queries using level-by-level partitions.
+  - [Monotonic stack](./monotonic_stack/monotonic_stack.go) — Maintain ordered candidates and find next greater or smaller elements.
+  - [Monotonic queue](./monotonic_queue/monotonic_queue.go) — Maintain a FIFO minimum or compute sliding-window minima.
+  - [Min heap](./heap/heap.go) — Push and pop the smallest value using the binary heap.
 
 ## Algorithmic Complexity Reference
 
 | Structure | Time Complexity | Space Complexity |
 | :--- | :--- | :--- |
-| **Deque** | $O(1)$ push/pop | $O(n)$ |
+| **Deque** | $O(1)$ amortized push/pop | $O(n)$ |
 | **Segment Tree** | $O(\log n)$ query/update | $O(n)$ |
 | **Fenwick Tree (BIT)** | $O(\log n)$ query/update | $O(n)$ |
 | **2D Fenwick Tree** | $O(\log^2 n)$ query/update | $O(n^2)$ |
 | **Treap** | $O(\log n)$ expected | $O(n)$ |
 | **Disjoint Set Union (DSU)** | $O(\alpha(n))$ amortized | $O(n)$ |
-| **Rope** | $O(\log n)$ split/concat | $O(n)$ |
+| **Rope** | $O(h^2)$ split, $O(h)$ concat (height $h$) | $O(n)$ |
 | **Euler Tour** | $O(1)$ ancestor check | $O(n)$ |
 | **LRU Cache** | $O(1)$ get/put | $O(\text{capacity})$ |
-| **Priority Queue / Heap** | $O(\log n)$ push/pop | $O(n)$ |
 | **Sparse Table** | $O(n \log n)$ init / $O(1)$ query | $O(n \log n)$ |
-| **Trie** | $O(L)$ insertion / search | $O(L \cdot \Sigma)$ |
-| **PBDS (Order Stats Tree)** | $O(\log n)$ insert / query | $O(n)$ |
+| **Trie** | $O(L)$ insertion / search | $O(P \cdot \Sigma)$ total node storage |
+| **PBDS (Order Stats Tree)** | $O(\log n)$ expected insert / query | $O(n)$ |
 | **Heavy-Light Decomposition** | $O(n)$ build / $O(\log^2 n)$ query | $O(n)$ |
-| **Suffix Array (with LCP)** | $O(n \log n)$ or $O(n \log^2 n)$ build | $O(n)$ |
+| **Suffix Array (with LCP)** | $O(n \log^2 n)$ build | $O(n)$ |
 | **Dijkstra's Algorithm** | $O((V + E) \log V)$ | $O(V + E)$ |
 | **Bellman-Ford Algorithm** | $O(V \cdot E)$ | $O(V + E)$ |
 | **Floyd-Warshall Algorithm** | $O(V^3)$ | $O(V^2)$ |
@@ -102,51 +108,63 @@ A formal, high-performance library of advanced data structures optimized for com
 | **Dinic's Maxflow** | $O(V^2 E)$ | $O(V + E)$ |
 | **Kahn's Algorithm** | $O(V + E)$ | $O(V + E)$ |
 | **Kadane's Algorithm** | $O(n)$ | $O(1)$ |
-| **KMP Matcher** | $O(n + m)$ | $O(m)$ |
+| **KMP Matcher** | $O(n + m)$ | $O(m)$ auxiliary + $O(z)$ returned matches |
 | **Modular Power** | $O(\log \text{power})$ | $O(1)$ |
-| **Rabin-Karp Hashing** | $O(n + m)$ average | $O(1)$ |
+| **Rabin-Karp Hashing** | $O(n + m + Hm)$; $O(nm)$ worst case | $O(1)$ auxiliary + $O(z)$ returned matches |
 | **Suffix Automaton** | $O(n \cdot \Sigma)$ | $O(n \cdot \Sigma)$ |
-| **Mo's Algorithm** | $O((n + q) \sqrt{n})$ | $O(q)$ |
-| **Convex Hull Trick** | $O(\log n)$ query / insert | $O(n)$ |
+| **Mo's Algorithm** | $O(q \log q + (qB + n\lceil n/B \rceil)F + qA)$ | $O(q)$ answers, excluding callback state |
+| **Convex Hull Trick** | $O(\log n)$ query, $O(1)$ amortized insert | $O(n)$ |
 | **Persistent Segment Tree** | $O(\log n)$ query / update | $O(n + q \log n)$ |
 | **Lazy Segment Tree** | $O(\log n)$ range query / update | $O(n)$ |
-| **Matrix Multiplication (D&C)** | $O(n^3)$ or $O(n^{\log_2 7})$ block scaling | $O(n^2)$ |
+| **Matrix Multiplication (D&C)** | $O(rkc)$ for $r × k$ and $k × c$ inputs | $O(rc)$ output plus logarithmic recursion |
 | **Gaussian Elimination** | $O(n^3)$ | $O(n^2)$ |
-| **Fibonacci Heap** | $O(1)$ insert/decrease-key / $O(\log n)$ delete | $O(n)$ |
-| **Red-Black Tree** | $O(\log n)$ search / insert / delete | $O(n)$ |
+| **Fibonacci Heap** | $O(1)$ insert / minimum lookup | $O(n)$ |
+| **Red-Black Tree** | $O(\log n)$ search / insert | $O(n)$ |
+| **Binary-lifting LCA** | O(V log V) build, O(log V) query | O(V log V) |
+| **Centroid decomposition** | O(V log V) | O(V) |
+| **Hopcroft–Karp matching** | O((V + E) √V) | O(V + E) |
+| **Euler path endpoints** | O(V + E) | O(V + E) |
+| **Hierholzer’s algorithm** | O(V + E) | O(V + E) |
+| **2-SAT** | O(V + C) | O(V + C) |
+| **Maximum clique with coloring bounds** | O(V² 2^V) worst case | O(V²) |
+| **Dominator tree** | O((V + E) log V) | O(V + E) |
+| **Sieve of Eratosthenes** | O(n log log n) | O(n) |
+| **Smallest prime factor** | O(n) build, O(log x) factor | O(n) |
+| **Chinese remainder theorem** | O(k log M) Euclidean steps | O(1) for int64 inputs |
+| **XOR linear basis** | O(w) per insert or query | O(w) |
+| **Number theoretic transform** | O(n log n) | O(n) convolution |
+| **Wavelet tree** | O(n log n) build, O(log(σ + 1)) query | O(n log(σ + 1)) |
+| **Wavelet matrix** | O(n log n) build, O(log(σ + 1)) query | O(n log(σ + 1)) |
+| **Monotonic stack** | O(1) amortized push, O(n) all neighbors | O(n) |
+| **Monotonic queue** | O(1) amortized per operation | O(n) |
+| **Min heap** | O(log n) push or pop | O(n) |
+
+Here, σ counts distinct values, w is the XOR word width, C counts clauses, and M is the running CRT period. Wavelet ranks and ranges are zero-based.
+
+For the trie, L is one word's length, P counts all allocated nodes (the root plus distinct prefixes across all inserted words), and Σ = 26. For KMP and Rabin–Karp, n and m are the text and pattern lengths, z is the number of returned matches, and H counts Rabin–Karp hash hits that require verification. These bounds assume constant-time element comparisons and value mapping; repetitive inputs can require $O(nm)$ verification even without hash collisions.
+
+For Mo's algorithm, n is the array length, q is the query count, B > 0 is the caller's block size, F bounds the time per add/remove callback, and A bounds the time per answer callback. With B ≈ √n and constant-time callbacks, the total is $O(q \log q + (n + q)\sqrt{n})$, including query sorting. Space assumes fixed-size answers and excludes storage owned by the callbacks.
 
 ## Competitive Programming Integration
 
-### Standard Import
-For local modular development or automated build test runners:
-```bash
-go get github.com/Roonil03/Templates_GoLang/segment_tree
+Install the package you need.
+
+```sh
+go get github.com/Roonil03/Templates_GoLang/heap
 ```
-
-### Direct Submission Strategy (Online Judges)
-
-For platforms requiring a unified source submission file (e.g., Codeforces, LeetCode, CodeChef), copy the targeted structural definition blocks and associated pointer receiver methods directly into your main compilation file. The removal of unnecessary boilerplate ensures compatibility with code limits.
 
 ```go
 package main
 
 import (
-	"cmp"
-	"fmt"
+    "fmt"
+    "github.com/Roonil03/Templates_GoLang/heap"
 )
 
-// Example copy-paste deployment for an Online Judge
-type PriorityQueue[T cmp.Ordered] struct {
-	data []T
-}
-
-func NewPriorityQueue[T cmp.Ordered]() *PriorityQueue[T] {
-	return &PriorityQueue[T]{data: make([]T, 0)}
-}
-
 func main() {
-	pq := NewPriorityQueue[int]()
-	// Competitive execution loop goes here
-	fmt.Println(pq)
+    h := heap.NewMinHeap(7, 2, 5)
+    fmt.Println(h.Pop()) // 2
 }
 ```
+
+For a single-file judge, copy the implementation and its imports into your submission under `package main`. For packages that import another template, include its implementation and adjust the qualified calls as well.
