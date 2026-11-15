@@ -1,8 +1,6 @@
 package fibonacci_heap
 
-import "cmp"
-
-type Node[T cmp.Ordered] struct {
+type Node[T ordered] struct {
 	Key                 T
 	parent, child       *Node[T]
 	left, right         *Node[T]
@@ -11,12 +9,12 @@ type Node[T cmp.Ordered] struct {
 }
 
 // FibonacciHeap uses the built-in ordering of keys. Floating keys must not be NaN.
-type FibonacciHeap[T cmp.Ordered] struct {
+type FibonacciHeap[T ordered] struct {
 	minNode *Node[T]
 	size    int
 }
 
-func NewFibonacciHeap[T cmp.Ordered]() *FibonacciHeap[T] {
+func NewFibonacciHeap[T ordered]() *FibonacciHeap[T] {
 	return &FibonacciHeap[T]{}
 }
 
@@ -41,4 +39,10 @@ func (h *FibonacciHeap[T]) Insert(key T) *Node[T] {
 
 func (h *FibonacciHeap[T]) GetMin() *Node[T] {
 	return h.minNode
+}
+
+type ordered interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64 | ~string
 }

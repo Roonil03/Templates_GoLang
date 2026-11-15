@@ -1,16 +1,15 @@
 package kruskal
 
 import (
-	"cmp"
 	"sort"
 )
 
-type Edge[W cmp.Ordered] struct {
+type Edge[W ordered] struct {
 	U, V   int
 	Weight W
 }
 
-func Kruskal[W cmp.Ordered](n int, edges []Edge[W]) []Edge[W] {
+func Kruskal[W ordered](n int, edges []Edge[W]) []Edge[W] {
 	sort.Slice(edges, func(i, j int) bool {
 		return edges[i].Weight < edges[j].Weight
 	})
@@ -55,4 +54,10 @@ func Kruskal[W cmp.Ordered](n int, edges []Edge[W]) []Edge[W] {
 	}
 
 	return mst
+}
+
+type ordered interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64 | ~string
 }

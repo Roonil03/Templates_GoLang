@@ -1,14 +1,12 @@
 package fenwick
 
-import "cmp"
-
-type Fenwick[T cmp.Ordered] struct {
+type Fenwick[T ordered] struct {
 	n    int
 	tree []T
 	add  func(T, T) T
 }
 
-func NewFenwick[T cmp.Ordered](n int, add func(T, T) T) *Fenwick[T] {
+func NewFenwick[T ordered](n int, add func(T, T) T) *Fenwick[T] {
 	return &Fenwick[T]{n: n, tree: make([]T, n+1), add: add}
 }
 
@@ -27,4 +25,10 @@ func (f *Fenwick[T]) Query(i int, zero T) T {
 		sum = f.add(sum, f.tree[i])
 	}
 	return sum
+}
+
+type ordered interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64 | ~string
 }

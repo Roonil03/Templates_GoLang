@@ -1,11 +1,10 @@
 package pbds
 
 import (
-	"cmp"
 	"math/rand"
 )
 
-type Node[T cmp.Ordered] struct {
+type Node[T ordered] struct {
 	key         T
 	pri, sz     int
 	left, right *Node[T]
@@ -13,15 +12,15 @@ type Node[T cmp.Ordered] struct {
 
 // PBDS uses the built-in ordering of keys. Floating keys supplied to Insert and
 // OrderOfKey must not be NaN.
-type PBDS[T cmp.Ordered] struct {
+type PBDS[T ordered] struct {
 	root *Node[T]
 }
 
-func NewPBDS[T cmp.Ordered]() *PBDS[T] {
+func NewPBDS[T ordered]() *PBDS[T] {
 	return &PBDS[T]{}
 }
 
-func sz[T cmp.Ordered](n *Node[T]) int {
+func sz[T ordered](n *Node[T]) int {
 	if n == nil {
 		return 0
 	}
@@ -32,7 +31,7 @@ func (n *Node[T]) upd() {
 	n.sz = 1 + sz(n.left) + sz(n.right)
 }
 
-func split[T cmp.Ordered](n *Node[T], k T) (*Node[T], *Node[T]) {
+func split[T ordered](n *Node[T], k T) (*Node[T], *Node[T]) {
 	if n == nil {
 		return nil, nil
 	}
@@ -48,7 +47,7 @@ func split[T cmp.Ordered](n *Node[T], k T) (*Node[T], *Node[T]) {
 	return l, n
 }
 
-func merge[T cmp.Ordered](l, r *Node[T]) *Node[T] {
+func merge[T ordered](l, r *Node[T]) *Node[T] {
 	if l == nil {
 		return r
 	}
@@ -100,4 +99,10 @@ func (p *PBDS[T]) FindByOrder(idx int) (T, bool) {
 	}
 	var zero T
 	return zero, false
+}
+
+type ordered interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64 | ~string
 }

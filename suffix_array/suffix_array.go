@@ -1,18 +1,17 @@
 package suffix_array
 
 import (
-	"cmp"
 	"sort"
 )
 
-type SuffixArray[T cmp.Ordered] struct {
+type SuffixArray[T ordered] struct {
 	SA  []int
 	LCP []int
 }
 
 // NewSuffixArray builds suffix and LCP arrays using the built-in ordering and
 // equality of elements. Floating input elements must not be NaN.
-func NewSuffixArray[T cmp.Ordered](s []T) *SuffixArray[T] {
+func NewSuffixArray[T ordered](s []T) *SuffixArray[T] {
 	n := len(s)
 	if n == 0 {
 		return &SuffixArray[T]{}
@@ -33,7 +32,7 @@ func NewSuffixArray[T cmp.Ordered](s []T) *SuffixArray[T] {
 		}
 		c[sa[i]] = classes
 	}
-	
+
 	cn := make([]int, n)
 	for h := 1; h < n; h <<= 1 {
 		sort.Slice(sa, func(i, j int) bool {
@@ -45,7 +44,7 @@ func NewSuffixArray[T cmp.Ordered](s []T) *SuffixArray[T] {
 			if nxtI < n && nxtJ < n {
 				return c[nxtI] < c[nxtJ]
 			}
-			return nxtI > nxtJ 
+			return nxtI > nxtJ
 		})
 		classes = 0
 		cn[sa[0]] = 0
@@ -94,4 +93,10 @@ func NewSuffixArray[T cmp.Ordered](s []T) *SuffixArray[T] {
 	}
 
 	return &SuffixArray[T]{SA: sa, LCP: lcp}
+}
+
+type ordered interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64 | ~string
 }

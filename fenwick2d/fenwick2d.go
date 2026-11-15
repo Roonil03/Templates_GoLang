@@ -1,14 +1,12 @@
 package fenwick2d
 
-import "cmp"
-
-type Fenwick2D[T cmp.Ordered] struct {
+type Fenwick2D[T ordered] struct {
 	n, m int
 	tree [][]T
 	add  func(T, T) T
 }
 
-func NewFenwick2D[T cmp.Ordered](n, m int, add func(T, T) T) *Fenwick2D[T] {
+func NewFenwick2D[T ordered](n, m int, add func(T, T) T) *Fenwick2D[T] {
 	b := make([][]T, n+1)
 	for i := range b {
 		b[i] = make([]T, m+1)
@@ -35,4 +33,10 @@ func (f *Fenwick2D[T]) Query(x, y int, zero T) T {
 		}
 	}
 	return sum
+}
+
+type ordered interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64 | ~string
 }
