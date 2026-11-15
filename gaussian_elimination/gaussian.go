@@ -6,7 +6,6 @@ type Float interface {
 	~float32 | ~float64
 }
 
-// GaussianElimination solves a square system in place and returns nil for a zero pivot.
 func GaussianElimination[T Float](a [][]T, b []T) []T {
 	n := len(a)
 	for i := 0; i < n; i++ {

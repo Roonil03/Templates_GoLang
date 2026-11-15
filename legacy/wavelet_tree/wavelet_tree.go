@@ -1,13 +1,9 @@
-// Package wavelet_tree provides a static range order-statistics tree.
 package wavelet_tree
 
 import (
 	"sort"
 )
 
-// WaveletTree indexes an immutable sequence. Construction takes O(n log n)
-// time and O(n log(sigma+1)) space, where sigma is the distinct value count.
-// Queries take O(log(sigma+1)) time. Values are integers. The zero value is an empty tree.
 type WaveletTree struct {
 	values []int
 	root   *node
@@ -20,7 +16,6 @@ type node struct {
 	left, right *node
 }
 
-// NewWaveletTree copies data; later changes to data do not affect the tree.
 func NewWaveletTree(data []int) *WaveletTree {
 	values := append([]int(nil), data...)
 	sort.Ints(values)
@@ -64,7 +59,6 @@ func build(data []int, lo, hi int) *node {
 	return p
 }
 
-// Len returns the length of the original sequence in O(1) time.
 func (w *WaveletTree) Len() int { return w.n }
 
 func (w *WaveletTree) check(l, r int) {
@@ -77,8 +71,6 @@ func (w *WaveletTree) lowerBound(value int) int {
 	return sort.Search(len(w.values), func(i int) bool { return w.values[i] >= value })
 }
 
-// Kth returns the zero-based kth smallest value in data[l:r].
-// It returns false if k is outside [0,r-l). It panics unless 0 <= l <= r <= Len().
 func (w *WaveletTree) Kth(l, r, k int) (int, bool) {
 	w.check(l, r)
 	if k < 0 || k >= r-l {
@@ -109,15 +101,11 @@ func countLess(p *node, l, r, rank int) int {
 	return countLess(p.left, a, b, rank) + countLess(p.right, l-a, r-b, rank)
 }
 
-// CountLess counts values strictly below value in data[l:r].
-// It panics unless 0 <= l <= r <= Len().
 func (w *WaveletTree) CountLess(l, r int, value int) int {
 	w.check(l, r)
 	return countLess(w.root, l, r, w.lowerBound(value))
 }
 
-// Count counts occurrences of value in data[l:r].
-// It panics unless 0 <= l <= r <= Len().
 func (w *WaveletTree) Count(l, r int, value int) int {
 	w.check(l, r)
 	rank := w.lowerBound(value)
@@ -127,8 +115,6 @@ func (w *WaveletTree) Count(l, r int, value int) int {
 	return countLess(w.root, l, r, rank+1) - countLess(w.root, l, r, rank)
 }
 
-// RangeFreq counts values in [low,high) within data[l:r]; low >= high returns 0.
-// It panics unless 0 <= l <= r <= Len().
 func (w *WaveletTree) RangeFreq(l, r int, low, high int) int {
 	w.check(l, r)
 	if low >= high {

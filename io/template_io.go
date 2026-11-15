@@ -197,7 +197,6 @@ func precomp() {
 func solve() {
 	n := in.rInt()
 	arr := readInts(n)
-	//Solution Here
 	printSlice(arr)
 }
 

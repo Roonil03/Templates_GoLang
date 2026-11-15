@@ -7,7 +7,7 @@
   <a href="https://pkg.go.dev/github.com/Roonil03/Templates_GoLang/legacy?tab=versions"><img src="https://img.shields.io/github/v/tag/Roonil03/Templates_GoLang?filter=legacy%2Fv%2A&amp;label=legacy" alt="Tagged module version"></a>
 </p>
 
-This module provides concrete-type competitive programming templates for Go 1.20 and later. Each link below opens the source file. The [root catalog](../README.md) lists the Go 1.23 implementations.
+This module provides concrete-type competitive programming templates for Go 1.20 and later. Each link below opens the source file. The [root catalog](../README.md) lists the Go 1.21 implementations.
 
 ## Repository Navigation Index
 
@@ -61,27 +61,27 @@ This module provides concrete-type competitive programming templates for Go 1.20
   - [Fibonacci Heap](./fibonacci_heap/fib_heap.go)
   - [Red-Black Tree](./red_black_tree/rbt.go)
 - **Tree queries**
-  - [Binary-lifting LCA](./lca/lca.go) — Find the lowest common ancestor or the k-th ancestor in a rooted forest.
-  - [Centroid decomposition](./centroid_decomposition/centroid_decomposition.go) — Build the centroid-parent array of an undirected forest.
+  - [Binary-lifting LCA](./lca/lca.go)
+  - [Centroid decomposition](./centroid_decomposition/centroid_decomposition.go)
 - **Graphs**
-  - [Hopcroft–Karp matching](./hopcroft_karp/hopcroft_karp.go) — Return maximum matching partners on both sides of a bipartite graph.
-  - [Euler path endpoints](./euler_path/euler_path.go) — Check connectivity and degrees in a directed or undirected multigraph.
-  - [Hierholzer’s algorithm](./hierholzer/hierholzer.go) — Return a trail that uses every edge exactly once.
-  - [2-SAT](./two_sat/two_sat.go) — Add two-literal clauses and recover a satisfying assignment.
-  - [Maximum clique with coloring bounds](./maximum_clique/maximum_clique.go) — Find an exact maximum clique with a greedy-coloring upper bound.
-  - [Dominator tree](./dominator_tree/dominator_tree.go) — Compute immediate dominators from a source in a directed graph.
+  - [Hopcroft–Karp matching](./hopcroft_karp/hopcroft_karp.go)
+  - [Euler path endpoints](./euler_path/euler_path.go)
+  - [Hierholzer’s algorithm](./hierholzer/hierholzer.go)
+  - [2-SAT](./two_sat/two_sat.go)
+  - [Maximum clique with coloring bounds](./maximum_clique/maximum_clique.go)
+  - [Dominator tree](./dominator_tree/dominator_tree.go)
 - **Number theory**
-  - [Sieve of Eratosthenes](./sieve/sieve.go) — Build a primality table or list all primes through an inclusive bound.
-  - [Smallest prime factor](./smallest_prime_factor/smallest_prime_factor.go) — Build a linear sieve and factor integers using its table.
-  - [Chinese remainder theorem](./chinese_remainder/chinese_remainder.go) — Combine congruences, including compatible non-coprime moduli.
-  - [XOR linear basis](./xor_basis/xor_basis.go) — Insert unsigned vectors, test representability, and maximize a subset XOR.
-  - [Number theoretic transform](./ntt/ntt.go) — Transform coefficients and convolve polynomials modulo 998244353.
+  - [Sieve of Eratosthenes](./sieve/sieve.go)
+  - [Smallest prime factor](./smallest_prime_factor/smallest_prime_factor.go)
+  - [Chinese remainder theorem](./chinese_remainder/chinese_remainder.go)
+  - [XOR linear basis](./xor_basis/xor_basis.go)
+  - [Number theoretic transform](./ntt/ntt.go)
 - **Range queries and collections**
-  - [Wavelet tree](./wavelet_tree/wavelet_tree.go) — Find order statistics and count values in a half-open range.
-  - [Wavelet matrix](./wavelet_matrix/wavelet_matrix.go) — Answer the same static range queries using level-by-level partitions.
-  - [Monotonic stack](./monotonic_stack/monotonic_stack.go) — Maintain ordered candidates and find next greater or smaller elements.
-  - [Monotonic queue](./monotonic_queue/monotonic_queue.go) — Maintain a FIFO minimum or compute sliding-window minima.
-  - [Min heap](./heap/heap.go) — Push and pop the smallest value using the binary heap.
+  - [Wavelet tree](./wavelet_tree/wavelet_tree.go)
+  - [Wavelet matrix](./wavelet_matrix/wavelet_matrix.go)
+  - [Monotonic stack](./monotonic_stack/monotonic_stack.go)
+  - [Monotonic queue](./monotonic_queue/monotonic_queue.go)
+  - [Min heap](./min_heap/min_heap.go)
 
 ## Algorithmic Complexity Reference
 
@@ -152,7 +152,7 @@ For Mo's algorithm, n is the array length, q is the query count, B > 0 is the ca
 Install the package you need.
 
 ```sh
-go get github.com/Roonil03/Templates_GoLang/legacy/heap
+go get github.com/Roonil03/Templates_GoLang/legacy/min_heap
 ```
 
 ```go
@@ -160,12 +160,12 @@ package main
 
 import (
     "fmt"
-    "github.com/Roonil03/Templates_GoLang/legacy/heap"
+    "github.com/Roonil03/Templates_GoLang/legacy/min_heap"
 )
 
 func main() {
-    h := heap.NewMinHeap(7, 2, 5)
-    fmt.Println(h.Pop()) // 2
+    h := min_heap.NewMinHeap(7, 2, 5)
+    fmt.Println(h.Pop())
 }
 ```
 

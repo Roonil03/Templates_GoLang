@@ -1,10 +1,5 @@
-// Package monotonic_queue provides a FIFO queue with constant-time minimum queries.
 package monotonic_queue
 
-// MonotonicQueue retains a nondecreasing deque of minimum candidates alongside
-// its FIFO values. Equal values are retained. Values use cmp.Compare ordering,
-// including NaNs. The zero value is ready to use. Space is O(n) in queue length;
-// Push and Pop take amortized O(1) time, and Min and Len take O(1) time.
 type MonotonicQueue[T ordered] struct {
 	values []T
 	head   int
@@ -16,10 +11,8 @@ type entry[T ordered] struct {
 	index int
 }
 
-// NewMonotonicQueue returns an empty queue.
 func NewMonotonicQueue[T ordered]() *MonotonicQueue[T] { return &MonotonicQueue[T]{} }
 
-// Push appends value to the FIFO queue and discards larger minimum candidates.
 func (q *MonotonicQueue[T]) Push(value T) {
 	index := len(q.values)
 	q.values = append(q.values, value)
@@ -30,7 +23,6 @@ func (q *MonotonicQueue[T]) Push(value T) {
 	q.minima = append(q.minima, entry[T]{value: value, index: index})
 }
 
-// Pop removes the oldest FIFO value; false means the queue is empty.
 func (q *MonotonicQueue[T]) Pop() (T, bool) {
 	if q.Len() == 0 {
 		var zero T
@@ -64,7 +56,6 @@ func (q *MonotonicQueue[T]) Pop() (T, bool) {
 	return value, true
 }
 
-// Min returns the smallest queued value; false means the queue is empty.
 func (q *MonotonicQueue[T]) Min() (T, bool) {
 	if q.Len() == 0 {
 		var zero T
@@ -73,11 +64,8 @@ func (q *MonotonicQueue[T]) Min() (T, bool) {
 	return q.minima[q.first].value, true
 }
 
-// Len returns the number of queued FIFO values.
 func (q *MonotonicQueue[T]) Len() int { return len(q.values) - q.head }
 
-// SlidingWindowMin returns the minimum in every consecutive window of size k.
-// It takes O(n) time and O(k) auxiliary space. It panics unless 1 <= k <= len(data).
 func SlidingWindowMin[T ordered](data []T, k int) []T {
 	if k < 1 || k > len(data) {
 		panic("monotonic_queue: invalid window size")

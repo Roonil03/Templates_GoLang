@@ -19,7 +19,6 @@ func MultiplyDC[T Numeric](a, b *Matrix[T]) *Matrix[T] {
 	return c
 }
 
-// Bisect the longest dimension; the leaf multiplies a small rectangular block.
 func multiplyBlock[T Numeric](a, b, c *Matrix[T], r, endR, k, endK, col, endC int) {
 	rows, inner, cols := endR-r, endK-k, endC-col
 	if rows == 0 || inner == 0 || cols == 0 {

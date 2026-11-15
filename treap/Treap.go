@@ -4,7 +4,6 @@ import (
 	"math/rand"
 )
 
-// Treap orders keys using cmp.Compare, including its ordering of NaNs.
 type Treap[K ordered] struct {
 	key         K
 	pri, sz     int
@@ -87,7 +86,6 @@ func (t *Treap[K]) Delete(key K) *Treap[K] {
 	return merge(a, c)
 }
 
-// Contains reports whether the tree contains key.
 func (t *Treap[K]) Contains(key K) bool {
 	for t != nil {
 		order := compare(key, t.key)

@@ -1,4 +1,3 @@
-// Package wavelet_matrix provides static range order statistics in a wavelet matrix.
 package wavelet_matrix
 
 import (
@@ -7,9 +6,6 @@ import (
 	"sort"
 )
 
-// WaveletMatrix indexes an immutable sequence in O(n log(sigma+1)) space.
-// Construction takes O(n log n) time; queries take O(log(sigma+1)) time,
-// where sigma is the distinct value count. Values are integers. The zero value is an empty matrix.
 type WaveletMatrix struct {
 	values []int
 	prefix [][]int
@@ -17,7 +13,6 @@ type WaveletMatrix struct {
 	n      int
 }
 
-// NewWaveletMatrix copies data; subsequent changes to data have no effect.
 func NewWaveletMatrix(data []int) *WaveletMatrix {
 	values := append([]int(nil), data...)
 	sort.Ints(values)
@@ -62,7 +57,6 @@ func NewWaveletMatrix(data []int) *WaveletMatrix {
 	return w
 }
 
-// Len returns the original sequence length in O(1) time.
 func (w *WaveletMatrix) Len() int { return w.n }
 
 func (w *WaveletMatrix) check(l, r int) {
@@ -74,8 +68,6 @@ func (w *WaveletMatrix) lowerBound(value int) int {
 	return sort.Search(len(w.values), func(i int) bool { return w.values[i] >= value })
 }
 
-// Kth returns the zero-based kth smallest value in data[l:r].
-// It returns false if k is outside [0,r-l). It panics unless 0 <= l <= r <= Len().
 func (w *WaveletMatrix) Kth(l, r, k int) (int, bool) {
 	w.check(l, r)
 	if k < 0 || k >= r-l {
@@ -117,15 +109,11 @@ func (w *WaveletMatrix) countLessRank(l, r, rank int) int {
 	return count
 }
 
-// CountLess counts values strictly below value in data[l:r].
-// It panics unless 0 <= l <= r <= Len().
 func (w *WaveletMatrix) CountLess(l, r int, value int) int {
 	w.check(l, r)
 	return w.countLessRank(l, r, w.lowerBound(value))
 }
 
-// Count counts occurrences of value in data[l:r].
-// It panics unless 0 <= l <= r <= Len().
 func (w *WaveletMatrix) Count(l, r int, value int) int {
 	w.check(l, r)
 	rank := w.lowerBound(value)
@@ -135,8 +123,6 @@ func (w *WaveletMatrix) Count(l, r int, value int) int {
 	return w.countLessRank(l, r, rank+1) - w.countLessRank(l, r, rank)
 }
 
-// RangeFreq counts values in [low,high) within data[l:r]; low >= high returns 0.
-// It panics unless 0 <= l <= r <= Len().
 func (w *WaveletMatrix) RangeFreq(l, r int, low, high int) int {
 	w.check(l, r)
 	if low >= high {

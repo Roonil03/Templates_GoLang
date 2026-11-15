@@ -15,7 +15,6 @@ func MultiplyDC(a, b *Matrix) *Matrix {
 	return c
 }
 
-// Bisect the longest dimension; the leaf multiplies a small rectangular block.
 func multiplyBlock(a, b, c *Matrix, r, endR, k, endK, col, endC int) {
 	rows, inner, cols := endR-r, endK-k, endC-col
 	if rows == 0 || inner == 0 || cols == 0 {

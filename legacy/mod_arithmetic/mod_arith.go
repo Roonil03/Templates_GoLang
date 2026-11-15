@@ -2,7 +2,6 @@ package mod_arithmetic
 
 import "math/bits"
 
-// residue normalizes x for a positive modulus.
 func residue(x, mod int64) int64 {
 	if mod <= 0 {
 		panic("modulus must be positive")
