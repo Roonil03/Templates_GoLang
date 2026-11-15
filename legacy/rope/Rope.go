@@ -11,7 +11,14 @@ func NewRope(s string) *Rope {
 	return &Rope{weight: len(s), data: s}
 }
 
+// Concat joins two ropes, treating nil as an empty rope.
 func Concat(a, b *Rope) *Rope {
+	if a == nil {
+		return b
+	}
+	if b == nil {
+		return a
+	}
 	return &Rope{weight: a.Len(), left: a, right: b}
 }
 
@@ -35,7 +42,14 @@ func (r *Rope) Index(i int) byte {
 	return r.right.Index(i - r.weight)
 }
 
+// Split partitions the rope at i, where 0 <= i <= r.Len(). A nil rope is empty.
 func (r *Rope) Split(i int) (*Rope, *Rope) {
+	if r == nil {
+		if i != 0 {
+			panic("split index out of range")
+		}
+		return nil, nil
+	}
 	if r.left == nil && r.right == nil {
 		return NewRope(r.data[:i]), NewRope(r.data[i:])
 	}

@@ -5,6 +5,7 @@ import (
 	"math/rand"
 )
 
+// Treap orders keys using cmp.Compare, including its ordering of NaNs.
 type Treap[K cmp.Ordered] struct {
 	key         K
 	pri, sz     int
@@ -29,7 +30,7 @@ func splitStrict[K cmp.Ordered](t *Treap[K], key K) (*Treap[K], *Treap[K]) {
 	if t == nil {
 		return nil, nil
 	}
-	if t.key < key {
+	if cmp.Compare(t.key, key) < 0 {
 		l, r := splitStrict(t.right, key)
 		t.right = l
 		t.recalc()
@@ -45,7 +46,7 @@ func splitEq[K cmp.Ordered](t *Treap[K], key K) (*Treap[K], *Treap[K]) {
 	if t == nil {
 		return nil, nil
 	}
-	if key < t.key {
+	if cmp.Compare(key, t.key) < 0 {
 		l, r := splitEq(t.left, key)
 		t.left = r
 		t.recalc()
@@ -90,10 +91,11 @@ func (t *Treap[K]) Delete(key K) *Treap[K] {
 // Contains reports whether the tree contains key.
 func (t *Treap[K]) Contains(key K) bool {
 	for t != nil {
-		if key == t.key {
+		order := cmp.Compare(key, t.key)
+		if order == 0 {
 			return true
 		}
-		if key < t.key {
+		if order < 0 {
 			t = t.left
 		} else {
 			t = t.right

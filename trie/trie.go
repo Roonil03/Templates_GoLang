@@ -1,3 +1,5 @@
+// Package trie stores words over the lowercase ASCII alphabet 'a' through 'z'.
+// Empty words are supported. Insert and Search require words in this alphabet.
 package trie
 
 type Node[T any] struct {

@@ -15,6 +15,7 @@ type Node[T cmp.Ordered] struct {
 	color               Color
 }
 
+// RedBlackTree orders keys using cmp.Compare, including its ordering of NaNs.
 type RedBlackTree[T cmp.Ordered] struct {
 	root *Node[T]
 }
@@ -47,7 +48,7 @@ func (t *RedBlackTree[T]) Insert(key T) {
 	x := t.root
 	for x != nil {
 		y = x
-		if node.Key < x.Key {
+		if cmp.Compare(node.Key, x.Key) < 0 {
 			x = x.left
 		} else {
 			x = x.right
@@ -56,7 +57,7 @@ func (t *RedBlackTree[T]) Insert(key T) {
 	node.parent = y
 	if y == nil {
 		t.root = node
-	} else if node.Key < y.Key {
+	} else if cmp.Compare(node.Key, y.Key) < 0 {
 		y.left = node
 	} else {
 		y.right = node
@@ -116,10 +117,11 @@ func (t *RedBlackTree[T]) balanceInsert(n *Node[T]) {
 // Contains reports whether key has been inserted.
 func (t *RedBlackTree[T]) Contains(key T) bool {
 	for n := t.root; n != nil; {
-		if key == n.Key {
+		order := cmp.Compare(key, n.Key)
+		if order == 0 {
 			return true
 		}
-		if key < n.Key {
+		if order < 0 {
 			n = n.left
 		} else {
 			n = n.right

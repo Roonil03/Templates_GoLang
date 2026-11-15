@@ -11,6 +11,8 @@ type Node[T cmp.Ordered] struct {
 	left, right *Node[T]
 }
 
+// PBDS uses the built-in ordering of keys. Floating keys supplied to Insert and
+// OrderOfKey must not be NaN.
 type PBDS[T cmp.Ordered] struct {
 	root *Node[T]
 }

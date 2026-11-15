@@ -1,6 +1,7 @@
 package convex_hull_trick
 
 import (
+	"math"
 	"math/big"
 	"sort"
 )
@@ -29,7 +30,17 @@ func Intersect[T SignedNumeric](l1, l2, l3 Line[T]) bool {
 	// With descending slopes the middle line is redundant if its intersection
 	// with the first is at or beyond its intersection with the third.
 	if T(1)/T(2) != 0 {
-		return (float64(l3.C)-float64(l2.C))*(float64(l1.M)-float64(l2.M)) <= (float64(l2.C)-float64(l1.C))*(float64(l2.M)-float64(l3.M))
+		diff := func(a, b T) *big.Rat {
+			x := new(big.Rat).SetFloat64(float64(a))
+			y := new(big.Rat).SetFloat64(float64(b))
+			if x == nil || y == nil {
+				panic("line coefficients must be finite")
+			}
+			return x.Sub(x, y)
+		}
+		left := new(big.Rat).Mul(diff(l3.C, l2.C), diff(l1.M, l2.M))
+		right := new(big.Rat).Mul(diff(l2.C, l1.C), diff(l2.M, l3.M))
+		return left.Cmp(right) <= 0
 	}
 	diff := func(a, b T) *big.Int { return new(big.Int).Sub(big.NewInt(int64(a)), big.NewInt(int64(b))) }
 	left := new(big.Int).Mul(diff(l3.C, l2.C), diff(l1.M, l2.M))
@@ -37,8 +48,11 @@ func Intersect[T SignedNumeric](l1, l2, l3 Line[T]) bool {
 	return left.Cmp(right) <= 0
 }
 
-// Add inserts a line in nonincreasing slope order.
+// Add inserts a line in nonincreasing slope order. Floating coefficients must be finite.
 func (c *CHT[T]) Add(m, cVal T) {
+	if T(1)/T(2) != 0 && (math.IsInf(float64(m), 0) || math.IsNaN(float64(m)) || math.IsInf(float64(cVal), 0) || math.IsNaN(float64(cVal))) {
+		panic("line coefficients must be finite")
+	}
 	if n := len(c.lines); n > 0 {
 		last := c.lines[n-1]
 		if m > last.M {
